@@ -6,9 +6,13 @@ import { CreateTaskModal } from "@/components/CreateTaskModal";
 import { TaskDetails } from "@/components/TaskDetails";
 import { DeleteConfirmModal } from "@/components/DeleteConfirmModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useTaskStore } from "@/lib/store";
 
-export default function Home() {
+/**
+ * Main content component with all the Kanban functionality
+ */
+function HomeContent() {
   const { setShowCreateModal, error, setError } = useTaskStore();
 
   useEffect(() => {
@@ -109,5 +113,17 @@ export default function Home() {
       <TaskDetails />
       <DeleteConfirmModal />
     </main>
+  );
+}
+
+/**
+ * Home page component wrapped with ErrorBoundary for error handling
+ * This prevents the entire app from crashing if a component fails
+ */
+export default function Home() {
+  return (
+    <ErrorBoundary>
+      <HomeContent />
+    </ErrorBoundary>
   );
 }

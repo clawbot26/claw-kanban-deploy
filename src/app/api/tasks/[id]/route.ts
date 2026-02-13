@@ -10,11 +10,37 @@ import {
 let initialized = false;
 
 /**
+ * Sanitizes user input to prevent XSS attacks
+ * Removes HTML tags and limits length
+ */
+function sanitizeInput(input: string | undefined, maxLength: number = 500): string | undefined {
+  if (!input) return undefined;
+  // Remove HTML tags to prevent XSS
+  const clean = input.replace(/<[^>]*>/g, "");
+  // Limit length
+  return clean.slice(0, maxLength);
+}
+
+/**
+ * Validates status value
+ */
+function isValidStatus(status: string): boolean {
+  return ["backlog", "in-progress", "pending-review", "done"].includes(status);
+}
+
+/**
+ * Validates priority value
+ */
+function isValidPriority(priority: string): boolean {
+  return ["low", "medium", "high", "urgent"].includes(priority);
+}
+
+/**
  * GET /api/tasks/:id
  * Get a single task by ID
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -74,20 +100,53 @@ export async function PUT(
 
     const input: UpdateTaskInput = {};
 
+    // Validate and sanitize inputs
     if (body.title !== undefined) {
-      input.title = body.title.trim();
+      const title = body.title.trim();
+      if (title.length > 200) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Title must be less than 200 characters",
+          },
+          { status: 400 }
+        );
+      }
+      input.title = sanitizeInput(title, 200);
     }
+
     if (body.description !== undefined) {
-      input.description = body.description.trim();
+      input.description = sanitizeInput(body.description, 1000);
     }
+
     if (body.status !== undefined) {
+      if (!isValidStatus(body.status)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Invalid status value",
+          },
+          { status: 400 }
+        );
+      }
       input.status = body.status;
     }
+
     if (body.priority !== undefined) {
+      if (!isValidPriority(body.priority)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Invalid priority value",
+          },
+          { status: 400 }
+        );
+      }
       input.priority = body.priority;
     }
+
     if (body.assignee !== undefined) {
-      input.assignee = body.assignee?.trim();
+      input.assignee = sanitizeInput(body.assignee, 100);
     }
 
     const task = updateTask(id, input);
@@ -126,7 +185,7 @@ export async function PUT(
  * Delete a task
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

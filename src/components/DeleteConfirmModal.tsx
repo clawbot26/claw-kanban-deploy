@@ -37,7 +37,7 @@ export function DeleteConfirmModal() {
           </p>
           {task && (
             <p className="text-sm font-medium text-gray-900 dark:text-white bg-gray-50 dark:bg-dark-700 p-3 rounded">
-              "{task.title}"
+              &ldquo;{task.title}&rdquo;
             </p>
           )}
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">

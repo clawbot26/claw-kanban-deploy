@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import type { Task, TaskStatus } from "@/lib/db";
 
+/**
+ * Interface defining the task store state and actions
+ * Uses Zustand for lightweight state management
+ */
 interface TaskStore {
+  // State
   tasks: Task[];
   loading: boolean;
   error: string | null;
@@ -10,18 +15,28 @@ interface TaskStore {
   showDeleteConfirm: boolean;
   deleteConfirmId: string | null;
 
-  // Actions
+  // Data Actions
+  /** Fetches all tasks from the API */
   fetchTasks: () => Promise<void>;
+  /** Fetches a single task by ID */
   fetchTaskById: (id: string) => Promise<Task | null>;
+  /** Creates a new task with the provided data */
   createTask: (task: Omit<Task, "id" | "createdAt" | "updatedAt">) => Promise<Task | null>;
+  /** Updates an existing task */
   updateTask: (id: string, updates: Partial<Task>) => Promise<Task | null>;
+  /** Deletes a task by ID */
   deleteTask: (id: string) => Promise<boolean>;
+  /** Moves a task to a different status column */
   moveTask: (id: string, newStatus: TaskStatus) => Promise<Task | null>;
 
   // UI Actions
+  /** Sets the currently selected task (opens details modal) */
   selectTask: (task: Task | null) => void;
+  /** Shows/hides the create task modal */
   setShowCreateModal: (show: boolean) => void;
+  /** Shows/hides the delete confirmation modal */
   setShowDeleteConfirm: (show: boolean, id?: string) => void;
+  /** Sets error message (auto-clears after 5s in UI) */
   setError: (error: string | null) => void;
 }
 

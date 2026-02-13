@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import {
   DndContext,
   DragEndEvent,
   closestCorners,
+  DragOverlay,
+  DragStartEvent,
 } from "@dnd-kit/core";
-import type { TaskStatus } from "@/lib/db";
+import type { Task, TaskStatus } from "@/lib/db";
 import { KanbanColumn } from "./KanbanColumn";
+import { TaskCard } from "./TaskCard";
 import { useTaskStore } from "@/lib/store";
-import { getTasksByStatus } from "@/lib/db";
+import { KanbanBoardSkeleton } from "./Skeletons";
 
 const STATUSES: TaskStatus[] = [
   "backlog",
@@ -17,6 +20,9 @@ const STATUSES: TaskStatus[] = [
   "pending-review",
   "done",
 ];
+
+// Memoized column to prevent unnecessary re-renders
+const MemoizedKanbanColumn = memo(KanbanColumn);
 
 export function KanbanBoard() {
   const {
@@ -26,21 +32,22 @@ export function KanbanBoard() {
     moveTask,
   } = useTaskStore();
 
-  const [groupedTasks, setGroupedTasks] = useState<Record<TaskStatus, typeof tasks>>({
+  const [groupedTasks, setGroupedTasks] = useState<Record<TaskStatus, Task[]>>({
     backlog: [],
     "in-progress": [],
     "pending-review": [],
     done: [],
   });
+  const [activeDragTask, setActiveDragTask] = useState<Task | null>(null);
 
   // Fetch tasks on mount
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
-  // Group tasks by status
+  // Group tasks by status - memoized for performance
   useEffect(() => {
-    const grouped: Record<TaskStatus, typeof tasks> = {
+    const grouped: Record<TaskStatus, Task[]> = {
       backlog: [],
       "in-progress": [],
       "pending-review": [],
@@ -54,8 +61,16 @@ export function KanbanBoard() {
     setGroupedTasks(grouped);
   }, [tasks]);
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    const task = tasks.find((t) => t.id === event.active.id);
+    if (task) {
+      setActiveDragTask(task);
+    }
+  }, [tasks]);
+
+  const handleDragEnd = useCallback(async (event: DragEndEvent) => {
     const { active, over } = event;
+    setActiveDragTask(null);
 
     if (!over) return;
 
@@ -67,23 +82,35 @@ export function KanbanBoard() {
 
     // Optimistically update UI
     await moveTask(taskId, newStatus);
-  };
+  }, [tasks, moveTask]);
+
+  // Show skeleton loading state
+  if (loading && tasks.length === 0) {
+    return <KanbanBoardSkeleton />;
+  }
 
   return (
     <DndContext
       collisionDetection={closestCorners}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
       <div className="flex gap-6 pb-6 overflow-x-auto">
         {STATUSES.map((status) => (
-          <KanbanColumn
+          <MemoizedKanbanColumn
             key={status}
             status={status}
             tasks={groupedTasks[status]}
-            isLoading={loading}
+            isLoading={false}
           />
         ))}
       </div>
+      {/* Drag overlay for smooth visual feedback */}
+      <DragOverlay>
+        {activeDragTask ? (
+          <TaskCard task={activeDragTask} isDragging />
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 }

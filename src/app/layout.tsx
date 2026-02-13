@@ -15,10 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kanban Board - Task Management",
   description: "A modern Kanban board application for tracking work tasks and project management",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

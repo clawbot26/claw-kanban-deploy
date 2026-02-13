@@ -165,12 +165,6 @@ export function deleteTask(id: string): boolean {
  * Get tasks grouped by status
  */
 export function getTasksByStatus(): Record<TaskStatus, Task[]> {
-  const statuses: TaskStatus[] = [
-    "backlog",
-    "in-progress",
-    "pending-review",
-    "done",
-  ];
   const grouped: Record<TaskStatus, Task[]> = {
     backlog: [],
     "in-progress": [],
@@ -212,11 +206,10 @@ export function getDatabaseStats() {
     "pending-review",
     "done",
   ];
-
   return {
     totalTasks: allTasks.length,
     byStatus: statuses.reduce(
-      (acc, status) => {
+      (acc: Record<TaskStatus, number>, status: TaskStatus) => {
         acc[status] = allTasks.filter((t) => t.status === status).length;
         return acc;
       },

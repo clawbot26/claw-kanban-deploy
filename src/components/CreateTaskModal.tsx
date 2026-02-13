@@ -29,8 +29,6 @@ export function CreateTaskModal() {
       priority,
       assignee: assignee || undefined,
       status: "backlog",
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     if (success) {

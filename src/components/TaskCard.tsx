@@ -4,17 +4,18 @@ import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Task } from "@/lib/db";
-import { PRIORITY_COLORS, TASK_PRIORITY_LABELS, formatDate, getRelativeTime } from "@/lib/utils";
+import { PRIORITY_COLORS, TASK_PRIORITY_LABELS, getRelativeTime } from "@/lib/utils";
 import { useTaskStore } from "@/lib/store";
 
 interface TaskCardProps {
   task: Task;
+  /** Whether the card is currently being dragged (for drag overlay styling) */
   isDragging?: boolean;
 }
 
 export function TaskCard({ task, isDragging }: TaskCardProps) {
   const [showMenu, setShowMenu] = useState(false);
-  const { selectTask, setShowDeleteConfirm, deleteTask } = useTaskStore();
+  const { selectTask, setShowDeleteConfirm } = useTaskStore();
 
   const {
     attributes,
