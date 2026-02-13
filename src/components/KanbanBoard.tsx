@@ -7,6 +7,9 @@ import {
   closestCorners,
   DragOverlay,
   DragStartEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import type { Task, TaskStatus } from "@/lib/db";
 import { KanbanColumn } from "./KanbanColumn";
@@ -39,6 +42,15 @@ export function KanbanBoard() {
     done: [],
   });
   const [activeDragTask, setActiveDragTask] = useState<Task | null>(null);
+
+  // Configure drag sensors for mouse and touch
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Require 8px movement before drag starts
+      },
+    })
+  );
 
   // Fetch tasks on mount
   useEffect(() => {
@@ -91,6 +103,7 @@ export function KanbanBoard() {
 
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
