@@ -1,0 +1,113 @@
+"use client";
+
+import { useEffect } from "react";
+import { KanbanBoard } from "@/components/KanbanBoard";
+import { CreateTaskModal } from "@/components/CreateTaskModal";
+import { TaskDetails } from "@/components/TaskDetails";
+import { DeleteConfirmModal } from "@/components/DeleteConfirmModal";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTaskStore } from "@/lib/store";
+
+export default function Home() {
+  const { setShowCreateModal, error, setError } = useTaskStore();
+
+  useEffect(() => {
+    // Clear errors after 5 seconds
+    if (error) {
+      const timer = setTimeout(() => setError(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error, setError]);
+
+  return (
+    <main className="min-h-screen bg-white dark:bg-dark-900 transition-colors">
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-dark-700 bg-white dark:bg-dark-800 shadow-sm">
+        <div className="max-w-full px-6 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Kanban Board
+                </h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Manage your tasks and projects
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                New Task
+              </button>
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="px-6 py-8">
+        <div className="overflow-x-auto">
+          <KanbanBoard />
+        </div>
+      </div>
+
+      {/* Error Toast */}
+      {error && (
+        <div className="fixed bottom-4 right-4 p-4 bg-red-500 text-white rounded-lg shadow-lg animate-fade-in max-w-sm">
+          <div className="flex gap-2">
+            <svg
+              className="w-5 h-5 flex-shrink-0"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <p className="text-sm">{error}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Modals */}
+      <CreateTaskModal />
+      <TaskDetails />
+      <DeleteConfirmModal />
+    </main>
+  );
+}
