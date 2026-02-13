@@ -87,12 +87,27 @@ export function KanbanBoard() {
     if (!over) return;
 
     const taskId = active.id as string;
-    const newStatus = over.id as TaskStatus;
+    const overId = over.id as string;
+    
+    // Determine the target status
+    // If dropped on a column, overId is the status
+    // If dropped on a task, find which column that task belongs to
+    let newStatus: TaskStatus;
+    
+    if (STATUSES.includes(overId as TaskStatus)) {
+      // Dropped directly on a column
+      newStatus = overId as TaskStatus;
+    } else {
+      // Dropped on a task - find that task's column
+      const overTask = tasks.find((t) => t.id === overId);
+      if (!overTask) return;
+      newStatus = overTask.status;
+    }
 
     const task = tasks.find((t) => t.id === taskId);
     if (!task || task.status === newStatus) return;
 
-    // Optimistically update UI
+    // Move task to new column
     await moveTask(taskId, newStatus);
   }, [tasks, moveTask]);
 
