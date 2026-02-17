@@ -128,9 +128,7 @@ function HomeContent() {
       {/* Main Content */}
       <div className="px-6 py-8">
         {activeTab === "tasks" ? (
-          <div className="overflow-x-auto">
-            <KanbanBoard />
-          </div>
+          <KanbanBoard />
         ) : (
           <ContentHub />
         )}

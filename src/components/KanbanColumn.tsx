@@ -23,7 +23,7 @@ export function KanbanColumn({ status, tasks, isLoading }: KanbanColumnProps) {
   const statusColor = STATUS_COLORS[status];
 
   return (
-    <div className="flex flex-col h-full min-w-80 md:min-w-96 bg-gray-50 dark:bg-dark-800/50 rounded-lg border border-gray-200 dark:border-dark-700">
+    <div className="flex-1 flex flex-col h-full min-w-0 bg-gray-50 dark:bg-dark-800/50 rounded-lg border border-gray-200 dark:border-dark-700">
       {/* Column Header */}
       <div
         className={`

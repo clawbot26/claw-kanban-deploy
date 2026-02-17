@@ -25,57 +25,10 @@ let tasks: Map<string, Task> = new Map();
 let taskIdCounter = 1;
 
 /**
- * Initialize database with sample data
+ * Initialize database (empty - no sample data)
  */
 export function initializeDatabase() {
-  if (tasks.size === 0) {
-    const sampleTasks: CreateTaskInput[] = [
-      {
-        title: "Design system setup",
-        description: "Create initial design tokens and component library",
-        priority: "high",
-        assignee: "Alice",
-      },
-      {
-        title: "API documentation",
-        description: "Write comprehensive API docs for all endpoints",
-        priority: "medium",
-        assignee: "Bob",
-      },
-      {
-        title: "User authentication",
-        description: "Implement JWT-based authentication system",
-        priority: "urgent",
-      },
-      {
-        title: "Database migrations",
-        description: "Set up database schema and migration scripts",
-        priority: "high",
-      },
-      {
-        title: "Testing framework",
-        description: "Configure Jest and integration tests",
-        priority: "medium",
-      },
-      {
-        title: "Performance optimization",
-        description: "Profile and optimize bundle size",
-        priority: "low",
-      },
-    ];
-
-    sampleTasks.forEach((task, index) => {
-      const statuses: TaskStatus[] = [
-        "backlog",
-        "backlog",
-        "in-progress",
-        "in-progress",
-        "pending-review",
-        "done",
-      ];
-      createTask(task, statuses[index]);
-    });
-  }
+  // Database starts empty - no template tasks
 }
 
 /**
@@ -223,42 +176,11 @@ export function getDatabaseStats() {
 let contentItems: Map<string, ContentItem> = new Map();
 let contentIdCounter = 1;
 
-// Sample content for initial data
-const sampleContent: ContentItemCreateInput[] = [
-  {
-    url: "https://example.com/article-1",
-    title: "Understanding React Server Components",
-    summary: "A deep dive into React Server Components and how they change the way we build React applications.",
-    key_points: ["Server components run on the server", "Reduced bundle size", "Improved performance"],
-    content_type: "article",
-    category: "tech",
-    tags: ["react", "javascript", "performance"],
-    source_name: "Example Tech Blog",
-    author: "Jane Developer",
-  },
-  {
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    title: "Rick Astley - Never Gonna Give You Up",
-    summary: "The classic music video that became an internet phenomenon.",
-    key_points: ["Iconic 80s music video", "Internet meme culture"],
-    content_type: "youtube",
-    category: "other",
-    tags: ["music", "video"],
-    source_name: "YouTube",
-    thumbnail_url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-    duration: "3:33",
-  },
-];
-
 /**
- * Initialize content database with sample data
+ * Initialize content database (empty - no sample data)
  */
 export function initializeContentDatabase(): void {
-  if (contentItems.size === 0) {
-    sampleContent.forEach((content) => {
-      createContentItem(content);
-    });
-  }
+  // Database starts empty - no template content
 }
 
 /**
