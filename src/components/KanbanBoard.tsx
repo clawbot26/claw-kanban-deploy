@@ -123,7 +123,7 @@ export function KanbanBoard() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex gap-6 pb-6 overflow-x-auto">
+      <div className="flex gap-4 pb-6">
         {STATUSES.map((status) => (
           <MemoizedKanbanColumn
             key={status}
