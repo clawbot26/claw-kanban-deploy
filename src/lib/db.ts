@@ -209,7 +209,7 @@ async function loadContent(): Promise<Map<string, ContentItem>> {
       item.createdAt = new Date(item.createdAt);
       item.updatedAt = new Date(item.updatedAt);
       if (item.read_at) item.read_at = new Date(item.read_at);
-      if (item.published_date) item.published_date = new Date(item.published_date);
+      // published_date stays as string per type definition
     });
     contentIdCounter = parsed.counter || 1;
     contentCache = items;
@@ -230,7 +230,7 @@ async function saveContent(items: Map<string, ContentItem>): Promise<void> {
 }
 
 export async function initializeContentDatabase(): Promise<void> {
-  const items = await loadContent();
+  await loadContent();
   // Database starts empty - no template content
 }
 
