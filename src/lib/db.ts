@@ -68,7 +68,7 @@ async function saveTasks(tasks: Map<string, Task>): Promise<void> {
 }
 
 export async function initializeDatabase(): Promise<void> {
-  const tasks = await loadTasks();
+  await loadTasks();
   // Database starts empty - no template tasks
 }
 
