@@ -322,15 +322,27 @@ npm run lint
 
 ## 📝 Environment Configuration
 
+This project uses **Vercel Postgres** for persistence.
+
 Create `.env.local` with:
 ```env
-# Database (for future implementation)
-DATABASE_URL="file:./dev.db"
+# Database (Vercel Postgres)
+POSTGRES_URL="postgres://user:password@localhost:5432/kanban"
 
 # Optional: 2nd Brain Integration
 BRAIN_API_URL="http://localhost:3001/api"
 BRAIN_API_KEY="your-api-key"
 ```
+
+### Database Schema Setup
+
+The schema is defined in `src/lib/db-schema.sql`. You can apply it manually against your Postgres instance if needed:
+
+```bash
+psql "$POSTGRES_URL" -f src/lib/db-schema.sql
+```
+
+On Vercel, the app will auto-create the schema on first request using the same definitions.
 
 ## 🐛 Troubleshooting
 
