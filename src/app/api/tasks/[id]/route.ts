@@ -45,12 +45,12 @@ export async function GET(
 ) {
   try {
     if (!initialized) {
-      initializeDatabase();
+      await initializeDatabase();
       initialized = true;
     }
 
     const { id } = await params;
-    const task = getTaskById(id);
+    const task = await getTaskById(id);
 
     if (!task) {
       return NextResponse.json(
@@ -91,7 +91,7 @@ export async function PUT(
 ) {
   try {
     if (!initialized) {
-      initializeDatabase();
+      await initializeDatabase();
       initialized = true;
     }
 
@@ -149,7 +149,7 @@ export async function PUT(
       input.assignee = sanitizeInput(body.assignee, 100);
     }
 
-    const task = updateTask(id, input);
+    const task = await updateTask(id, input);
 
     if (!task) {
       return NextResponse.json(
@@ -190,12 +190,12 @@ export async function DELETE(
 ) {
   try {
     if (!initialized) {
-      initializeDatabase();
+      await initializeDatabase();
       initialized = true;
     }
 
     const { id } = await params;
-    const deleted = deleteTask(id);
+    const deleted = await deleteTask(id);
 
     if (!deleted) {
       return NextResponse.json(

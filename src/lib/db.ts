@@ -1,7 +1,10 @@
 /**
  * Database layer for task management and content hub
- * Uses in-memory storage for now, can be replaced with a real database later
+ * Uses file-based JSON storage for persistence on Vercel
  */
+
+import { promises as fs } from 'fs';
+import { join } from 'path';
 
 import type {
   Task,
@@ -20,24 +23,60 @@ import type {
 export type { Task, TaskStatus, TaskPriority, CreateTaskInput, UpdateTaskInput };
 export type { ContentItem, ContentItemCreateInput, ContentItemUpdateInput, ContentType, ContentCategory, ContentFilterOptions };
 
-// In-memory database
-let tasks: Map<string, Task> = new Map();
-let taskIdCounter = 1;
+// Database file paths - use /tmp for Vercel persistence
+const TASKS_DB_FILE = join('/tmp', 'kanban-tasks.json');
+const CONTENT_DB_FILE = join('/tmp', 'kanban-content.json');
 
-/**
- * Initialize database (empty - no sample data)
- */
-export function initializeDatabase() {
+// In-memory cache
+let tasksCache: Map<string, Task> | null = null;
+let contentCache: Map<string, ContentItem> | null = null;
+let taskIdCounter = 1;
+let contentIdCounter = 1;
+
+// ============================================================================
+// Task Database
+// ============================================================================
+
+async function loadTasks(): Promise<Map<string, Task>> {
+  if (tasksCache) return tasksCache;
+  
+  try {
+    const data = await fs.readFile(TASKS_DB_FILE, 'utf-8');
+    const parsed = JSON.parse(data);
+    const tasks = new Map<string, Task>(parsed.tasks);
+    // Convert date strings back to Date objects
+    tasks.forEach((task) => {
+      task.createdAt = new Date(task.createdAt);
+      task.updatedAt = new Date(task.updatedAt);
+    });
+    taskIdCounter = parsed.counter || 1;
+    tasksCache = tasks;
+    return tasks;
+  } catch (error) {
+    tasksCache = new Map();
+    return tasksCache;
+  }
+}
+
+async function saveTasks(tasks: Map<string, Task>): Promise<void> {
+  const data = {
+    tasks: Array.from(tasks.entries()),
+    counter: taskIdCounter,
+    savedAt: new Date().toISOString(),
+  };
+  await fs.writeFile(TASKS_DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+export async function initializeDatabase(): Promise<void> {
+  const tasks = await loadTasks();
   // Database starts empty - no template tasks
 }
 
-/**
- * Create a new task
- */
-export function createTask(
+export async function createTask(
   input: CreateTaskInput,
   status: TaskStatus = "backlog"
-): Task {
+): Promise<Task> {
+  const tasks = await loadTasks();
   const id = `task-${taskIdCounter++}`;
   const now = new Date();
 
@@ -53,13 +92,12 @@ export function createTask(
   };
 
   tasks.set(id, task);
+  await saveTasks(tasks);
   return task;
 }
 
-/**
- * Get all tasks, optionally filtered by status
- */
-export function getAllTasks(status?: TaskStatus): Task[] {
+export async function getAllTasks(status?: TaskStatus): Promise<Task[]> {
+  const tasks = await loadTasks();
   const allTasks = Array.from(tasks.values()).sort(
     (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
   );
@@ -67,21 +105,16 @@ export function getAllTasks(status?: TaskStatus): Task[] {
   if (status) {
     return allTasks.filter((task) => task.status === status);
   }
-
   return allTasks;
 }
 
-/**
- * Get a single task by ID
- */
-export function getTaskById(id: string): Task | undefined {
+export async function getTaskById(id: string): Promise<Task | undefined> {
+  const tasks = await loadTasks();
   return tasks.get(id);
 }
 
-/**
- * Update a task
- */
-export function updateTask(id: string, input: UpdateTaskInput): Task | null {
+export async function updateTask(id: string, input: UpdateTaskInput): Promise<Task | null> {
+  const tasks = await loadTasks();
   const task = tasks.get(id);
   if (!task) return null;
 
@@ -92,55 +125,47 @@ export function updateTask(id: string, input: UpdateTaskInput): Task | null {
   };
 
   tasks.set(id, updatedTask);
+  await saveTasks(tasks);
   return updatedTask;
 }
 
-/**
- * Delete a task
- */
-export function deleteTask(id: string): boolean {
-  return tasks.delete(id);
+export async function deleteTask(id: string): Promise<boolean> {
+  const tasks = await loadTasks();
+  const deleted = tasks.delete(id);
+  if (deleted) {
+    await saveTasks(tasks);
+  }
+  return deleted;
 }
 
-/**
- * Get tasks grouped by status
- */
-export function getTasksByStatus(): Record<TaskStatus, Task[]> {
+export async function getTasksByStatus(): Promise<Record<TaskStatus, Task[]>> {
+  const allTasks = await getAllTasks();
   const grouped: Record<TaskStatus, Task[]> = {
     backlog: [],
     "in-progress": [],
     "pending-review": [],
     done: [],
   };
-
-  const allTasks = getAllTasks();
   allTasks.forEach((task) => {
     grouped[task.status].push(task);
   });
-
   return grouped;
 }
 
-/**
- * Get tasks by assignee (for 2nd Brain integration)
- */
-export function getTasksByAssignee(assignee: string): Task[] {
-  return getAllTasks().filter((task) => task.assignee === assignee);
+export async function getTasksByAssignee(assignee: string): Promise<Task[]> {
+  const allTasks = await getAllTasks();
+  return allTasks.filter((task) => task.assignee === assignee);
 }
 
-/**
- * Clear all tasks (for testing)
- */
-export function clearDatabase(): void {
+export async function clearDatabase(): Promise<void> {
+  const tasks = await loadTasks();
   tasks.clear();
   taskIdCounter = 1;
+  await saveTasks(tasks);
 }
 
-/**
- * Get database statistics
- */
-export function getDatabaseStats() {
-  const allTasks = getAllTasks();
+export async function getDatabaseStats() {
+  const allTasks = await getAllTasks();
   const statuses: TaskStatus[] = [
     "backlog",
     "in-progress",
@@ -172,21 +197,45 @@ export function getDatabaseStats() {
 // Content Hub Database
 // ============================================================================
 
-// In-memory storage for content items
-let contentItems: Map<string, ContentItem> = new Map();
-let contentIdCounter = 1;
+async function loadContent(): Promise<Map<string, ContentItem>> {
+  if (contentCache) return contentCache;
+  
+  try {
+    const data = await fs.readFile(CONTENT_DB_FILE, 'utf-8');
+    const parsed = JSON.parse(data);
+    const items = new Map<string, ContentItem>(parsed.items);
+    // Convert date strings back to Date objects
+    items.forEach((item) => {
+      item.createdAt = new Date(item.createdAt);
+      item.updatedAt = new Date(item.updatedAt);
+      if (item.read_at) item.read_at = new Date(item.read_at);
+      if (item.published_date) item.published_date = new Date(item.published_date);
+    });
+    contentIdCounter = parsed.counter || 1;
+    contentCache = items;
+    return items;
+  } catch (error) {
+    contentCache = new Map();
+    return contentCache;
+  }
+}
 
-/**
- * Initialize content database (empty - no sample data)
- */
-export function initializeContentDatabase(): void {
+async function saveContent(items: Map<string, ContentItem>): Promise<void> {
+  const data = {
+    items: Array.from(items.entries()),
+    counter: contentIdCounter,
+    savedAt: new Date().toISOString(),
+  };
+  await fs.writeFile(CONTENT_DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+export async function initializeContentDatabase(): Promise<void> {
+  const items = await loadContent();
   // Database starts empty - no template content
 }
 
-/**
- * Create a new content item
- */
-export function createContentItem(input: ContentItemCreateInput): ContentItem {
+export async function createContentItem(input: ContentItemCreateInput): Promise<ContentItem> {
+  const items = await loadContent();
   const id = `content-${contentIdCounter++}`;
   const now = new Date();
 
@@ -211,25 +260,21 @@ export function createContentItem(input: ContentItemCreateInput): ContentItem {
     updatedAt: now,
   };
 
-  contentItems.set(id, contentItem);
+  items.set(id, contentItem);
+  await saveContent(items);
   return contentItem;
 }
 
-/**
- * Get all content items with optional filtering
- */
-export function getAllContentItems(filters?: ContentFilterOptions): ContentItem[] {
-  let items = Array.from(contentItems.values()).sort(
+export async function getAllContentItems(filters?: ContentFilterOptions): Promise<ContentItem[]> {
+  let items = Array.from((await loadContent()).values()).sort(
     (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
   );
 
   if (!filters) return items;
 
-  // Apply filters
   if (filters.is_archived !== undefined) {
     items = items.filter((item) => item.is_archived === filters.is_archived);
   } else {
-    // By default, exclude archived items
     items = items.filter((item) => !item.is_archived);
   }
 
@@ -255,7 +300,6 @@ export function getAllContentItems(filters?: ContentFilterOptions): ContentItem[
     items = items.filter((item) => item.task_id === filters.task_id);
   }
 
-  // Full-text search across title, summary, and tags
   if (filters.search) {
     const searchLower = filters.search.toLowerCase();
     items = items.filter(
@@ -270,21 +314,16 @@ export function getAllContentItems(filters?: ContentFilterOptions): ContentItem[
   return items;
 }
 
-/**
- * Get a single content item by ID
- */
-export function getContentItemById(id: string): ContentItem | undefined {
-  return contentItems.get(id);
+export async function getContentItemById(id: string): Promise<ContentItem | undefined> {
+  return (await loadContent()).get(id);
 }
 
-/**
- * Update a content item
- */
-export function updateContentItem(
+export async function updateContentItem(
   id: string,
   input: ContentItemUpdateInput
-): ContentItem | null {
-  const item = contentItems.get(id);
+): Promise<ContentItem | null> {
+  const items = await loadContent();
+  const item = items.get(id);
   if (!item) return null;
 
   const updatedItem: ContentItem = {
@@ -295,82 +334,56 @@ export function updateContentItem(
     updatedAt: new Date(),
   };
 
-  contentItems.set(id, updatedItem);
+  items.set(id, updatedItem);
+  await saveContent(items);
   return updatedItem;
 }
 
-/**
- * Delete a content item permanently
- */
-export function deleteContentItem(id: string): boolean {
-  return contentItems.delete(id);
+export async function deleteContentItem(id: string): Promise<boolean> {
+  const items = await loadContent();
+  const deleted = items.delete(id);
+  if (deleted) {
+    await saveContent(items);
+  }
+  return deleted;
 }
 
-/**
- * Archive a content item (soft delete)
- */
-export function archiveContentItem(id: string): ContentItem | null {
+export async function archiveContentItem(id: string): Promise<ContentItem | null> {
   return updateContentItem(id, { is_archived: true });
 }
 
-/**
- * Mark content as read
- */
-export function markContentAsRead(id: string): ContentItem | null {
+export async function markContentAsRead(id: string): Promise<ContentItem | null> {
   return updateContentItem(id, { is_read: true, read_at: new Date() });
 }
 
-/**
- * Get content items by category
- */
-export function getContentItemsByCategory(category: ContentCategory): ContentItem[] {
+export async function getContentItemsByCategory(category: ContentCategory): Promise<ContentItem[]> {
   return getAllContentItems({ category });
 }
 
-/**
- * Get content items by tag
- */
-export function getContentItemsByTag(tag: string): ContentItem[] {
+export async function getContentItemsByTag(tag: string): Promise<ContentItem[]> {
   return getAllContentItems({ tags: [tag] });
 }
 
-/**
- * Get all unique tags across all content items
- */
-export function getAllTags(): string[] {
+export async function getAllTags(): Promise<string[]> {
   const allTags = new Set<string>();
-  contentItems.forEach((item) => {
+  (await loadContent()).forEach((item) => {
     item.tags.forEach((tag) => allTags.add(tag));
   });
   return Array.from(allTags).sort();
 }
 
-/**
- * Get all categories with counts
- */
-export function getCategoriesWithCounts(): { category: ContentCategory; count: number }[] {
+export async function getCategoriesWithCounts(): Promise<{ category: ContentCategory; count: number }[]> {
   const categories: ContentCategory[] = [
-    "tech",
-    "business",
-    "science",
-    "design",
-    "health",
-    "finance",
-    "productivity",
-    "other",
+    "tech", "business", "science", "design", "health", "finance", "productivity", "other",
   ];
-
-  return categories.map((category) => ({
+  return Promise.all(categories.map(async (category) => ({
     category,
-    count: getAllContentItems({ category, is_archived: false }).length,
-  }));
+    count: (await getAllContentItems({ category, is_archived: false })).length,
+  })));
 }
 
-/**
- * Get content statistics
- */
-export function getContentStats() {
-  const allItems = Array.from(contentItems.values());
+export async function getContentStats() {
+  const allItems = Array.from((await loadContent()).values());
   const unarchived = allItems.filter((item) => !item.is_archived);
 
   return {
@@ -384,36 +397,26 @@ export function getContentStats() {
       youtube: unarchived.filter((item) => item.content_type === "youtube").length,
       note: unarchived.filter((item) => item.content_type === "note").length,
     },
-    byCategory: getCategoriesWithCounts().filter((c) => c.count > 0),
-    totalTags: getAllTags().length,
+    byCategory: (await getCategoriesWithCounts()).filter((c) => c.count > 0),
+    totalTags: (await getAllTags()).length,
   };
 }
 
-/**
- * Clear all content items (for testing)
- */
-export function clearContentDatabase(): void {
-  contentItems.clear();
+export async function clearContentDatabase(): Promise<void> {
+  const items = await loadContent();
+  items.clear();
   contentIdCounter = 1;
+  await saveContent(items);
 }
 
-/**
- * Link content to a task
- */
-export function linkContentToTask(contentId: string, taskId: string): ContentItem | null {
+export async function linkContentToTask(contentId: string, taskId: string): Promise<ContentItem | null> {
   return updateContentItem(contentId, { task_id: taskId });
 }
 
-/**
- * Unlink content from a task
- */
-export function unlinkContentFromTask(contentId: string): ContentItem | null {
+export async function unlinkContentFromTask(contentId: string): Promise<ContentItem | null> {
   return updateContentItem(contentId, { task_id: undefined });
 }
 
-/**
- * Get content items linked to a specific task
- */
-export function getContentItemsByTaskId(taskId: string): ContentItem[] {
+export async function getContentItemsByTaskId(taskId: string): Promise<ContentItem[]> {
   return getAllContentItems({ task_id: taskId });
 }
