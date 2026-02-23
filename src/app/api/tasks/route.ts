@@ -17,14 +17,14 @@ let initialized = false;
 export async function GET(request: NextRequest) {
   try {
     if (!initialized) {
-      initializeDatabase();
+      await initializeDatabase();
       initialized = true;
     }
 
     const searchParams = request.nextUrl.searchParams;
     const status = searchParams.get("status") as TaskStatus | null;
 
-    const tasks = getAllTasks(status || undefined);
+    const tasks = await getAllTasks(status || undefined);
 
     return NextResponse.json(
       {
@@ -65,7 +65,7 @@ function sanitizeInput(input: string | undefined, maxLength: number = 500): stri
 export async function POST(request: NextRequest) {
   try {
     if (!initialized) {
-      initializeDatabase();
+      await initializeDatabase();
       initialized = true;
     }
 
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
       assignee: sanitizeInput(body.assignee, 100),
     };
 
-    const task = createTask(input, body.status || "backlog");
+    const task = await createTask(input, body.status || "backlog");
 
     return NextResponse.json(
       {

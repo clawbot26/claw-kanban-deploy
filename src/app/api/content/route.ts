@@ -17,7 +17,7 @@ let initialized = false;
 export async function GET(request: NextRequest) {
   try {
     if (!initialized) {
-      initializeContentDatabase();
+      await initializeContentDatabase();
       initialized = true;
     }
 
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     };
 
     // Get all items (filtering happens in the function)
-    let items = getAllContentItems(filters);
+    let items = await getAllContentItems(filters);
     
     const total = items.length;
     const totalPages = Math.ceil(total / limit);
@@ -99,7 +99,7 @@ function sanitizeInput(input: string | undefined, maxLength: number = 500): stri
 export async function POST(request: NextRequest) {
   try {
     if (!initialized) {
-      initializeContentDatabase();
+      await initializeContentDatabase();
       initialized = true;
     }
 
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
       task_id: body.task_id,
     };
 
-    const contentItem = createContentItem(input);
+    const contentItem = await createContentItem(input);
 
     return NextResponse.json(
       {

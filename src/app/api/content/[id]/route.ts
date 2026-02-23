@@ -21,12 +21,12 @@ export async function GET(
 ) {
   try {
     if (!initialized) {
-      initializeContentDatabase();
+      await initializeContentDatabase();
       initialized = true;
     }
 
     const { id } = await params;
-    const item = getContentItemById(id);
+    const item = await getContentItemById(id);
 
     if (!item) {
       return NextResponse.json(
@@ -76,7 +76,7 @@ export async function PUT(
 ) {
   try {
     if (!initialized) {
-      initializeContentDatabase();
+      await initializeContentDatabase();
       initialized = true;
     }
 
@@ -84,7 +84,7 @@ export async function PUT(
     const body = await request.json();
 
     // Check if item exists
-    const existingItem = getContentItemById(id);
+    const existingItem = await getContentItemById(id);
     if (!existingItem) {
       return NextResponse.json(
         {
@@ -186,7 +186,7 @@ export async function PUT(
       input.task_id = body.task_id || undefined;
     }
 
-    const updatedItem = updateContentItem(id, input);
+    const updatedItem = await updateContentItem(id, input);
 
     if (!updatedItem) {
       return NextResponse.json(
@@ -228,7 +228,7 @@ export async function DELETE(
 ) {
   try {
     if (!initialized) {
-      initializeContentDatabase();
+      await initializeContentDatabase();
       initialized = true;
     }
 
@@ -237,7 +237,7 @@ export async function DELETE(
     const archive = searchParams.get("archive") === "true";
 
     // Check if item exists
-    const existingItem = getContentItemById(id);
+    const existingItem = await getContentItemById(id);
     if (!existingItem) {
       return NextResponse.json(
         {
@@ -271,7 +271,7 @@ export async function DELETE(
       );
     } else {
       // Permanent delete
-      const deleted = deleteContentItem(id);
+      const deleted = await deleteContentItem(id);
       if (!deleted) {
         return NextResponse.json(
           {
