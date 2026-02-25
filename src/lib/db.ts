@@ -233,7 +233,7 @@ export async function getTaskById(id: string): Promise<Task | undefined> {
     await ensurePostgresSchema();
     const result = await sql`SELECT * FROM tasks WHERE id = ${id}`;
     if (result.rows.length === 0) return undefined;
-    const row = result.rows[0];
+    const row: any = result.rows[0];
     return {
       id: row.id, title: row.title, description: row.description,
       status: row.status, priority: row.priority, assignee: row.assignee,
@@ -355,7 +355,7 @@ export async function getAllContentItems(filters?: ContentFilterOptions): Promis
   if (isPostgresAvailable()) {
     await ensurePostgresSchema();
     const result = await sql`SELECT * FROM content_items ORDER BY created_at DESC`;
-    items = result.rows.map(row => ({
+    items = result.rows.map((row: any) => ({
       id: row.id, url: row.url, title: row.title, summary: row.summary,
       key_points: row.key_points, content_type: row.content_type, category: row.category,
       tags: row.tags, source_name: row.source_name, author: row.author,
@@ -388,7 +388,7 @@ export async function getContentItemById(id: string): Promise<ContentItem | unde
   if (isPostgresAvailable()) {
     const result = await sql`SELECT * FROM content_items WHERE id = ${id}`;
     if (result.rows.length === 0) return undefined;
-    const row = result.rows[0];
+    const row: any = result.rows[0];
     return { id: row.id, url: row.url, title: row.title, summary: row.summary, key_points: row.key_points, content_type: row.content_type, category: row.category, tags: row.tags, source_name: row.source_name, author: row.author, thumbnail_url: row.thumbnail_url, duration: row.duration, published_date: row.published_date, is_read: row.is_read, is_archived: row.is_archived, read_at: row.read_at, task_id: row.task_id, createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at) };
   }
   return (await loadContent()).get(id);
