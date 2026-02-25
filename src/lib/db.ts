@@ -216,7 +216,7 @@ export async function getAllTasks(status?: TaskStatus): Promise<Task[]> {
     } else {
       result = await sql`SELECT * FROM tasks ORDER BY created_at DESC`;
     }
-    return result.rows.map(row => ({
+    return result.rows.map((row: any) => ({
       id: row.id, title: row.title, description: row.description,
       status: row.status, priority: row.priority, assignee: row.assignee,
       createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at),
