@@ -1,19 +1,7 @@
 /**
  * Database layer for task management and content hub
- * Uses Vercel Postgres if available, otherwise falls back to file storage
+ * Uses GitHub API for persistent storage across Vercel deploys
  */
-
-import { promises as fs } from 'fs';
-import { join } from 'path';
-
-// Try to import Vercel Postgres, but don't fail if it's not configured
-let sql: any = null;
-try {
-  const postgres = require("@vercel/postgres");
-  sql = postgres.sql;
-} catch (e) {
-  // Postgres not available
-}
 
 import type {
   Task,
@@ -39,152 +27,203 @@ export type {
   ContentFilterOptions,
 };
 
-// Check if Postgres is available and configured
-function isPostgresAvailable(): boolean {
-  return !!sql && !!process.env.POSTGRES_URL && !process.env.POSTGRES_URL.includes('localhost');
-}
+// GitHub configuration
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'clawbot26';
+const GITHUB_REPO = process.env.GITHUB_REPO || 'claw-kanban-deploy';
+const DATA_BRANCH = process.env.DATA_BRANCH || 'data';
+const TASKS_FILE = 'tasks.json';
+const CONTENT_FILE = 'content.json';
 
-// ============================================================================
-// FILE-BASED FALLBACK STORAGE
-// ============================================================================
-
-const TASKS_DB_FILE = join('/tmp', 'kanban-tasks.json');
-const CONTENT_DB_FILE = join('/tmp', 'kanban-content.json');
-
+// In-memory cache with background sync
 let tasksCache: Map<string, Task> | null = null;
 let contentCache: Map<string, ContentItem> | null = null;
 let taskIdCounter = 1;
 let contentIdCounter = 1;
+let lastSync = 0;
+const SYNC_INTERVAL = 30000; // 30 seconds
 
-async function loadTasks(): Promise<Map<string, Task>> {
-  if (tasksCache) return tasksCache;
+async function githubApi(path: string, options: RequestInit = {}): Promise<any> {
+  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}${path}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Authorization': `Bearer ${GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...options.headers,
+    },
+  });
+  if (!res.ok) {
+    const error = await res.text();
+    throw new Error(`GitHub API error: ${res.status} ${error}`);
+  }
+  return res.json();
+}
+
+async function getFileContent(path: string): Promise<{ content: string; sha: string } | null> {
   try {
-    const data = await fs.readFile(TASKS_DB_FILE, 'utf-8');
-    const parsed = JSON.parse(data);
-    const tasks = new Map<string, Task>(parsed.tasks);
+    const data = await githubApi(`/contents/${path}?ref=${DATA_BRANCH}`);
+    if (data.content) {
+      return {
+        content: Buffer.from(data.content, 'base64').toString('utf-8'),
+        sha: data.sha,
+      };
+    }
+    return null;
+  } catch (e: any) {
+    if (e.message.includes('404')) return null;
+    throw e;
+  }
+}
+
+async function createOrUpdateFile(path: string, content: string, message: string, sha?: string): Promise<void> {
+  const body: any = {
+    message,
+    content: Buffer.from(content).toString('base64'),
+    branch: DATA_BRANCH,
+  };
+  if (sha) body.sha = sha;
+  
+  await githubApi(`/contents/${path}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}
+
+async function ensureDataBranch(): Promise<void> {
+  try {
+    await githubApi(`/git/refs/heads/${DATA_BRANCH}`);
+  } catch {
+    // Branch doesn't exist, create it from master
+    const master = await githubApi('/git/refs/heads/master');
+    await githubApi('/git/refs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ref: `refs/heads/${DATA_BRANCH}`,
+        sha: master.object.sha,
+      }),
+    });
+  }
+}
+
+async function loadTasksFromGitHub(): Promise<Map<string, Task>> {
+  try {
+    await ensureDataBranch();
+    const file = await getFileContent(TASKS_FILE);
+    if (!file) return new Map();
+    
+    const data = JSON.parse(file.content);
+    const tasks = new Map<string, Task>(data.tasks);
+    // Convert dates
     tasks.forEach((task) => {
       task.createdAt = new Date(task.createdAt);
       task.updatedAt = new Date(task.updatedAt);
     });
-    taskIdCounter = parsed.counter || 1;
-    tasksCache = tasks;
+    taskIdCounter = data.counter || 1;
     return tasks;
   } catch (error) {
-    tasksCache = new Map();
-    return tasksCache;
+    console.error('Failed to load tasks from GitHub:', error);
+    return new Map();
   }
 }
 
-async function saveTasks(tasks: Map<string, Task>): Promise<void> {
-  const data = {
-    tasks: Array.from(tasks.entries()),
-    counter: taskIdCounter,
-    savedAt: new Date().toISOString(),
-  };
-  await fs.writeFile(TASKS_DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+async function saveTasksToGitHub(tasks: Map<string, Task>): Promise<void> {
+  try {
+    await ensureDataBranch();
+    const data = {
+      tasks: Array.from(tasks.entries()),
+      counter: taskIdCounter,
+      updatedAt: new Date().toISOString(),
+    };
+    const content = JSON.stringify(data, null, 2);
+    
+    const existing = await getFileContent(TASKS_FILE);
+    await createOrUpdateFile(
+      TASKS_FILE,
+      content,
+      `Update tasks: ${tasks.size} tasks`,
+      existing?.sha
+    );
+  } catch (error) {
+    console.error('Failed to save tasks to GitHub:', error);
+    throw error;
+  }
 }
 
-async function loadContent(): Promise<Map<string, ContentItem>> {
-  if (contentCache) return contentCache;
+async function loadContentFromGitHub(): Promise<Map<string, ContentItem>> {
   try {
-    const data = await fs.readFile(CONTENT_DB_FILE, 'utf-8');
-    const parsed = JSON.parse(data);
-    const items = new Map<string, ContentItem>(parsed.items);
+    await ensureDataBranch();
+    const file = await getFileContent(CONTENT_FILE);
+    if (!file) return new Map();
+    
+    const data = JSON.parse(file.content);
+    const items = new Map<string, ContentItem>(data.items);
     items.forEach((item) => {
       item.createdAt = new Date(item.createdAt);
       item.updatedAt = new Date(item.updatedAt);
       if (item.read_at) item.read_at = new Date(item.read_at);
     });
-    contentIdCounter = parsed.counter || 1;
-    contentCache = items;
+    contentIdCounter = data.counter || 1;
     return items;
   } catch (error) {
-    contentCache = new Map();
-    return contentCache;
+    console.error('Failed to load content from GitHub:', error);
+    return new Map();
   }
 }
 
-async function saveContent(items: Map<string, ContentItem>): Promise<void> {
-  const data = {
-    items: Array.from(items.entries()),
-    counter: contentIdCounter,
-    savedAt: new Date().toISOString(),
-  };
-  await fs.writeFile(CONTENT_DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-}
-
-// ============================================================================
-// POSTGRES IMPLEMENTATION
-// ============================================================================
-
-let schemaInitialized = false;
-
-async function ensurePostgresSchema(): Promise<void> {
-  if (schemaInitialized || !isPostgresAvailable()) return;
-
+async function saveContentToGitHub(items: Map<string, ContentItem>): Promise<void> {
   try {
-    await sql`CREATE SEQUENCE IF NOT EXISTS task_id_seq`;
-    await sql`CREATE SEQUENCE IF NOT EXISTS content_id_seq`;
+    await ensureDataBranch();
+    const data = {
+      items: Array.from(items.entries()),
+      counter: contentIdCounter,
+      updatedAt: new Date().toISOString(),
+    };
+    const content = JSON.stringify(data, null, 2);
     
-    await sql`
-      CREATE TABLE IF NOT EXISTS tasks (
-        id TEXT PRIMARY KEY DEFAULT ('task-' || nextval('task_id_seq')),
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        status TEXT NOT NULL,
-        priority TEXT NOT NULL,
-        assignee TEXT,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      )
-    `;
-    
-    await sql`
-      CREATE TABLE IF NOT EXISTS content_items (
-        id TEXT PRIMARY KEY DEFAULT ('content-' || nextval('content_id_seq')),
-        url TEXT NOT NULL,
-        title TEXT NOT NULL,
-        summary TEXT,
-        key_points JSONB NOT NULL DEFAULT '[]'::jsonb,
-        content_type TEXT NOT NULL,
-        category TEXT NOT NULL DEFAULT 'other',
-        tags JSONB NOT NULL DEFAULT '[]'::jsonb,
-        source_name TEXT,
-        author TEXT,
-        thumbnail_url TEXT,
-        duration TEXT,
-        published_date TEXT,
-        is_read BOOLEAN NOT NULL DEFAULT FALSE,
-        is_archived BOOLEAN NOT NULL DEFAULT FALSE,
-        read_at TIMESTAMPTZ,
-        task_id TEXT REFERENCES tasks(id) ON DELETE SET NULL,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      )
-    `;
-    
-    schemaInitialized = true;
+    const existing = await getFileContent(CONTENT_FILE);
+    await createOrUpdateFile(
+      CONTENT_FILE,
+      content,
+      `Update content: ${items.size} items`,
+      existing?.sha
+    );
   } catch (error) {
-    console.error('Failed to initialize Postgres schema:', error);
+    console.error('Failed to save content to GitHub:', error);
+    throw error;
   }
 }
 
+async function loadTasks(): Promise<Map<string, Task>> {
+  if (tasksCache && Date.now() - lastSync < SYNC_INTERVAL) return tasksCache;
+  tasksCache = await loadTasksFromGitHub();
+  lastSync = Date.now();
+  return tasksCache;
+}
+
+async function loadContent(): Promise<Map<string, ContentItem>> {
+  if (contentCache && Date.now() - lastSync < SYNC_INTERVAL) return contentCache;
+  contentCache = await loadContentFromGitHub();
+  lastSync = Date.now();
+  return contentCache;
+}
+
 // ============================================================================
-// UNIFIED API - Tasks
+// TASKS API
 // ============================================================================
 
 export async function initializeDatabase(): Promise<void> {
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-  } else {
-    await loadTasks();
-  }
+  await loadTasks();
 }
 
 export async function createTask(
   input: CreateTaskInput,
   status: TaskStatus = "backlog"
 ): Promise<Task> {
+  const tasks = await loadTasks();
   const id = `task-${taskIdCounter++}`;
   const now = new Date();
   const task: Task = {
@@ -192,90 +231,36 @@ export async function createTask(
     status, priority: input.priority, assignee: input.assignee,
     createdAt: now, updatedAt: now,
   };
-
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-    await sql`
-      INSERT INTO tasks (id, title, description, status, priority, assignee, created_at, updated_at)
-      VALUES (${task.id}, ${task.title}, ${task.description}, ${task.status}, ${task.priority}, ${task.assignee}, ${task.createdAt}, ${task.updatedAt})
-    `;
-  } else {
-    const tasks = await loadTasks();
-    tasks.set(id, task);
-    await saveTasks(tasks);
-  }
+  tasks.set(id, task);
+  await saveTasksToGitHub(tasks);
   return task;
 }
 
 export async function getAllTasks(status?: TaskStatus): Promise<Task[]> {
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-    let result;
-    if (status) {
-      result = await sql`SELECT * FROM tasks WHERE status = ${status} ORDER BY created_at DESC`;
-    } else {
-      result = await sql`SELECT * FROM tasks ORDER BY created_at DESC`;
-    }
-    return result.rows.map((row: any) => ({
-      id: row.id, title: row.title, description: row.description,
-      status: row.status, priority: row.priority, assignee: row.assignee,
-      createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at),
-    }));
-  } else {
-    const tasks = await loadTasks();
-    const all = Array.from(tasks.values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-    return status ? all.filter(t => t.status === status) : all;
-  }
+  const tasks = await loadTasks();
+  const all = Array.from(tasks.values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  return status ? all.filter(t => t.status === status) : all;
 }
 
 export async function getTaskById(id: string): Promise<Task | undefined> {
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-    const result = await sql`SELECT * FROM tasks WHERE id = ${id}`;
-    if (result.rows.length === 0) return undefined;
-    const row: any = result.rows[0];
-    return {
-      id: row.id, title: row.title, description: row.description,
-      status: row.status, priority: row.priority, assignee: row.assignee,
-      createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at),
-    };
-  } else {
-    return (await loadTasks()).get(id);
-  }
+  return (await loadTasks()).get(id);
 }
 
 export async function updateTask(id: string, input: UpdateTaskInput): Promise<Task | null> {
-  const existing = await getTaskById(id);
+  const tasks = await loadTasks();
+  const existing = tasks.get(id);
   if (!existing) return null;
-  
   const updated: Task = { ...existing, ...input, updatedAt: new Date() };
-
-  if (isPostgresAvailable()) {
-    await sql`
-      UPDATE tasks SET 
-        title = ${updated.title}, description = ${updated.description},
-        status = ${updated.status}, priority = ${updated.priority},
-        assignee = ${updated.assignee}, updated_at = ${updated.updatedAt}
-      WHERE id = ${id}
-    `;
-  } else {
-    const tasks = await loadTasks();
-    tasks.set(id, updated);
-    await saveTasks(tasks);
-  }
+  tasks.set(id, updated);
+  await saveTasksToGitHub(tasks);
   return updated;
 }
 
 export async function deleteTask(id: string): Promise<boolean> {
-  if (isPostgresAvailable()) {
-    const result = await sql`DELETE FROM tasks WHERE id = ${id}`;
-    return result.rowCount > 0;
-  } else {
-    const tasks = await loadTasks();
-    const deleted = tasks.delete(id);
-    if (deleted) await saveTasks(tasks);
-    return deleted;
-  }
+  const tasks = await loadTasks();
+  const deleted = tasks.delete(id);
+  if (deleted) await saveTasksToGitHub(tasks);
+  return deleted;
 }
 
 export async function getTasksByStatus(): Promise<Record<TaskStatus, Task[]>> {
@@ -291,14 +276,10 @@ export async function getTasksByAssignee(assignee: string): Promise<Task[]> {
 }
 
 export async function clearDatabase(): Promise<void> {
-  if (isPostgresAvailable()) {
-    await sql`DELETE FROM tasks`;
-  } else {
-    const tasks = await loadTasks();
-    tasks.clear();
-    taskIdCounter = 1;
-    await saveTasks(tasks);
-  }
+  const tasks = await loadTasks();
+  tasks.clear();
+  taskIdCounter = 1;
+  await saveTasksToGitHub(tasks);
 }
 
 export async function getDatabaseStats() {
@@ -313,16 +294,15 @@ export async function getDatabaseStats() {
 }
 
 // ============================================================================
-// UNIFIED API - Content (simplified for brevity)
+// CONTENT API (simplified)
 // ============================================================================
 
 export async function initializeContentDatabase(): Promise<void> {
-  if (!isPostgresAvailable()) {
-    await loadContent();
-  }
+  await loadContent();
 }
 
 export async function createContentItem(input: ContentItemCreateInput): Promise<ContentItem> {
+  const items = await loadContent();
   const id = `content-${contentIdCounter++}`;
   const now = new Date();
   const item: ContentItem = {
@@ -334,39 +314,14 @@ export async function createContentItem(input: ContentItemCreateInput): Promise<
     published_date: input.published_date, is_read: false, is_archived: false,
     task_id: input.task_id, createdAt: now, updatedAt: now,
   };
-
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-    await sql`
-      INSERT INTO content_items (id, url, title, summary, key_points, content_type, category, tags, source_name, author, thumbnail_url, duration, published_date, is_read, is_archived, task_id, created_at, updated_at)
-      VALUES (${item.id}, ${item.url}, ${item.title}, ${item.summary}, ${JSON.stringify(item.key_points)}, ${item.content_type}, ${item.category}, ${JSON.stringify(item.tags)}, ${item.source_name}, ${item.author}, ${item.thumbnail_url}, ${item.duration}, ${item.published_date}, ${item.is_read}, ${item.is_archived}, ${item.task_id}, ${item.createdAt}, ${item.updatedAt})
-    `;
-  } else {
-    const items = await loadContent();
-    items.set(id, item);
-    await saveContent(items);
-  }
+  items.set(id, item);
+  await saveContentToGitHub(items);
   return item;
 }
 
 export async function getAllContentItems(filters?: ContentFilterOptions): Promise<ContentItem[]> {
-  let items: ContentItem[];
+  let items = Array.from((await loadContent()).values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   
-  if (isPostgresAvailable()) {
-    await ensurePostgresSchema();
-    const result = await sql`SELECT * FROM content_items ORDER BY created_at DESC`;
-    items = result.rows.map((row: any) => ({
-      id: row.id, url: row.url, title: row.title, summary: row.summary,
-      key_points: row.key_points, content_type: row.content_type, category: row.category,
-      tags: row.tags, source_name: row.source_name, author: row.author,
-      thumbnail_url: row.thumbnail_url, duration: row.duration, published_date: row.published_date,
-      is_read: row.is_read, is_archived: row.is_archived, read_at: row.read_at,
-      task_id: row.task_id, createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at),
-    }));
-  } else {
-    items = Array.from((await loadContent()).values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-  }
-
   if (!filters) return items.filter(i => !i.is_archived);
   
   if (filters.is_archived !== undefined) items = items.filter(i => i.is_archived === filters.is_archived);
@@ -385,38 +340,23 @@ export async function getAllContentItems(filters?: ContentFilterOptions): Promis
 }
 
 export async function getContentItemById(id: string): Promise<ContentItem | undefined> {
-  if (isPostgresAvailable()) {
-    const result = await sql`SELECT * FROM content_items WHERE id = ${id}`;
-    if (result.rows.length === 0) return undefined;
-    const row: any = result.rows[0];
-    return { id: row.id, url: row.url, title: row.title, summary: row.summary, key_points: row.key_points, content_type: row.content_type, category: row.category, tags: row.tags, source_name: row.source_name, author: row.author, thumbnail_url: row.thumbnail_url, duration: row.duration, published_date: row.published_date, is_read: row.is_read, is_archived: row.is_archived, read_at: row.read_at, task_id: row.task_id, createdAt: new Date(row.created_at), updatedAt: new Date(row.updated_at) };
-  }
   return (await loadContent()).get(id);
 }
 
 export async function updateContentItem(id: string, input: ContentItemUpdateInput): Promise<ContentItem | null> {
-  const existing = await getContentItemById(id);
+  const items = await loadContent();
+  const existing = items.get(id);
   if (!existing) return null;
   const updated: ContentItem = { ...existing, ...input, key_points: input.key_points || existing.key_points, tags: input.tags || existing.tags, updatedAt: new Date() };
-
-  if (isPostgresAvailable()) {
-    await sql`UPDATE content_items SET title = ${updated.title}, summary = ${updated.summary}, key_points = ${JSON.stringify(updated.key_points)}, category = ${updated.category}, tags = ${JSON.stringify(updated.tags)}, is_read = ${updated.is_read}, is_archived = ${updated.is_archived}, read_at = ${updated.read_at}, task_id = ${updated.task_id}, updated_at = ${updated.updatedAt} WHERE id = ${id}`;
-  } else {
-    const items = await loadContent();
-    items.set(id, updated);
-    await saveContent(items);
-  }
+  items.set(id, updated);
+  await saveContentToGitHub(items);
   return updated;
 }
 
 export async function deleteContentItem(id: string): Promise<boolean> {
-  if (isPostgresAvailable()) {
-    const result = await sql`DELETE FROM content_items WHERE id = ${id}`;
-    return result.rowCount > 0;
-  }
   const items = await loadContent();
   const deleted = items.delete(id);
-  if (deleted) await saveContent(items);
+  if (deleted) await saveContentToGitHub(items);
   return deleted;
 }
 
@@ -455,14 +395,10 @@ export async function getContentStats() {
 }
 
 export async function clearContentDatabase(): Promise<void> {
-  if (isPostgresAvailable()) {
-    await sql`DELETE FROM content_items`;
-  } else {
-    const items = await loadContent();
-    items.clear();
-    contentIdCounter = 1;
-    await saveContent(items);
-  }
+  const items = await loadContent();
+  items.clear();
+  contentIdCounter = 1;
+  await saveContentToGitHub(items);
 }
 
 export async function linkContentToTask(contentId: string, taskId: string): Promise<ContentItem | null> {
