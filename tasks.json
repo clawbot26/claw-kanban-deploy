@@ -38,8 +38,20 @@
         "createdAt": "2026-02-26T00:01:19.388Z",
         "updatedAt": "2026-02-26T00:01:19.388Z"
       }
+    ],
+    [
+      "task-4",
+      {
+        "id": "task-4",
+        "title": "[Discord #general] Add scheduled auto-archive for done tasks",
+        "description": "Set up Vercel Cron Jobs to auto-archive tasks in Done status for >7 days\n- Configured in vercel.json\n- Runs daily at midnight UTC\n- Calls /api/tasks/archive?auto=true\nStatus: Completed by codex",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-02-26T00:23:14.575Z",
+        "updatedAt": "2026-02-26T00:23:14.575Z"
+      }
     ]
   ],
-  "counter": 4,
-  "updatedAt": "2026-02-26T00:06:38.987Z"
+  "counter": 5,
+  "updatedAt": "2026-02-26T00:23:14.686Z"
 }
