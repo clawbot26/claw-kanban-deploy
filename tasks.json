@@ -18,10 +18,11 @@
         "id": "task-2",
         "title": "[Discord #general] Establish kanban workflow for all tasks",
         "description": "Set up process to ensure all tasks from any channel are tracked on kanban board\n- Auto-create tasks for every request\n- Update status as work progresses\n- Mark done when complete\n- Use prefixes for context: [Discord], [DM], [Project X]",
-        "status": "in-progress",
+        "status": "done",
         "priority": "high",
         "createdAt": "2026-02-25T23:18:53.775Z",
-        "updatedAt": "2026-02-25T23:18:53.775Z"
+        "updatedAt": "2026-02-26T00:01:36.973Z",
+        "assignee": "clawai"
       }
     ],
     [
@@ -38,5 +39,5 @@
     ]
   ],
   "counter": 4,
-  "updatedAt": "2026-02-26T00:01:19.497Z"
+  "updatedAt": "2026-02-26T00:01:37.074Z"
 }
