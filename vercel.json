@@ -1,4 +1,10 @@
 {
   "version": 2,
-  "name": "claw-kanban"
+  "name": "claw-kanban",
+  "crons": [
+    {
+      "path": "/api/tasks/archive?auto=true",
+      "schedule": "0 0 * * *"
+    }
+  ]
 }
