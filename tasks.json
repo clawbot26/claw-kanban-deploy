@@ -23,8 +23,20 @@
         "createdAt": "2026-02-25T23:18:53.775Z",
         "updatedAt": "2026-02-25T23:18:53.775Z"
       }
+    ],
+    [
+      "task-3",
+      {
+        "id": "task-3",
+        "title": "[Discord #general] ChipStack QA - Test Players/Games/Stats flows",
+        "description": "Navigate to chipstack-one.vercel.app\nTest Players, Games, and Stats flows\nWrite report to workspace/chipstack-qa-report-v3.md\nAssigned by dhsiao via Discord #general",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-02-26T00:01:19.388Z",
+        "updatedAt": "2026-02-26T00:01:19.388Z"
+      }
     ]
   ],
-  "counter": 3,
-  "updatedAt": "2026-02-25T23:18:53.867Z"
+  "counter": 4,
+  "updatedAt": "2026-02-26T00:01:19.497Z"
 }
