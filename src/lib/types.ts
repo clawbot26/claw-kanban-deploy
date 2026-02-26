@@ -14,6 +14,8 @@ export interface Task {
   assignee?: string;
   createdAt: Date;
   updatedAt: Date;
+  archived?: boolean;
+  archivedAt?: Date;
 }
 
 export interface CreateTaskInput {

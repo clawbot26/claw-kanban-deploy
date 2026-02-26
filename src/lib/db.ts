@@ -236,9 +236,12 @@ export async function createTask(
   return task;
 }
 
-export async function getAllTasks(status?: TaskStatus): Promise<Task[]> {
+export async function getAllTasks(status?: TaskStatus, includeArchived: boolean = false): Promise<Task[]> {
   const tasks = await loadTasks();
-  const all = Array.from(tasks.values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  let all = Array.from(tasks.values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  if (!includeArchived) {
+    all = all.filter(t => !t.archived);
+  }
   return status ? all.filter(t => t.status === status) : all;
 }
 
@@ -263,10 +266,77 @@ export async function deleteTask(id: string): Promise<boolean> {
   return deleted;
 }
 
-export async function getTasksByStatus(): Promise<Record<TaskStatus, Task[]>> {
-  const all = await getAllTasks();
-  const grouped: Record<TaskStatus, Task[]> = { backlog: [], "in-progress": [], "pending-review": [], done: [] };
-  all.forEach(task => grouped[task.status].push(task));
+// Archive functions
+export async function archiveTask(id: string): Promise<Task | null> {
+  const tasks = await loadTasks();
+  const existing = tasks.get(id);
+  if (!existing) return null;
+  const archived: Task = { ...existing, archived: true, archivedAt: new Date(), updatedAt: new Date() };
+  tasks.set(id, archived);
+  await saveTasksToGitHub(tasks);
+  return archived;
+}
+
+export async function unarchiveTask(id: string): Promise<Task | null> {
+  const tasks = await loadTasks();
+  const existing = tasks.get(id);
+  if (!existing || !existing.archived) return null;
+  const unarchived: Task = { ...existing, archived: false, archivedAt: undefined, updatedAt: new Date() };
+  tasks.set(id, unarchived);
+  await saveTasksToGitHub(tasks);
+  return unarchived;
+}
+
+export async function getArchivedTasks(): Promise<Task[]> {
+  const tasks = await loadTasks();
+  return Array.from(tasks.values())
+    .filter(t => t.archived)
+    .sort((a, b) => (b.archivedAt?.getTime() || 0) - (a.archivedAt?.getTime() || 0));
+}
+
+// Auto-archive tasks that have been "done" for over a week
+export async function autoArchiveOldDoneTasks(): Promise<Task[]> {
+  const tasks = await loadTasks();
+  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const archived: Task[] = [];
+
+  tasks.forEach((task) => {
+    if (task.status === 'done' && !task.archived && task.updatedAt < oneWeekAgo) {
+      task.archived = true;
+      task.archivedAt = new Date();
+      task.updatedAt = new Date();
+      archived.push(task);
+    }
+  });
+
+  if (archived.length > 0) {
+    await saveTasksToGitHub(tasks);
+  }
+  return archived;
+}
+
+export async function getTasksByStatus(includeArchived: boolean = false): Promise<Record<TaskStatus | 'archived', Task[]>> {
+  const tasks = await loadTasks();
+  const all = Array.from(tasks.values());
+  const grouped: Record<TaskStatus | 'archived', Task[]> = { backlog: [], "in-progress": [], "pending-review": [], done: [], archived: [] };
+  all.forEach(task => {
+    if (task.archived) {
+      grouped.archived.push(task);
+    } else {
+      grouped[task.status].push(task);
+    }
+  });
+  // Sort each group by date
+  for (const key of Object.keys(grouped) as (TaskStatus | 'archived')[]) {
+    grouped[key].sort((a, b) => {
+      const dateA = key === 'archived' ? (a.archivedAt?.getTime() || 0) : a.updatedAt.getTime();
+      const dateB = key === 'archived' ? (b.archivedAt?.getTime() || 0) : b.updatedAt.getTime();
+      return dateB - dateA;
+    });
+  }
+  if (!includeArchived) {
+    delete (grouped as any).archived;
+  }
   return grouped;
 }
 
