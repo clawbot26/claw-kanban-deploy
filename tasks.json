@@ -21,8 +21,10 @@
         "status": "done",
         "priority": "high",
         "createdAt": "2026-02-25T23:18:53.775Z",
-        "updatedAt": "2026-02-26T00:01:36.973Z",
-        "assignee": "clawai"
+        "updatedAt": "2026-02-26T00:06:38.891Z",
+        "assignee": "clawai",
+        "archived": true,
+        "archivedAt": "2026-02-26T00:06:38.891Z"
       }
     ],
     [
@@ -39,5 +41,5 @@
     ]
   ],
   "counter": 4,
-  "updatedAt": "2026-02-26T00:01:37.074Z"
+  "updatedAt": "2026-02-26T00:06:38.987Z"
 }
