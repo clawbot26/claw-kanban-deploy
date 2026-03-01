@@ -50,8 +50,20 @@
         "createdAt": "2026-02-26T00:23:14.575Z",
         "updatedAt": "2026-02-26T00:23:14.575Z"
       }
+    ],
+    [
+      "task-5",
+      {
+        "id": "task-5",
+        "title": "System test: pipeline verified",
+        "description": "Test task — can be deleted",
+        "status": "done",
+        "priority": "low",
+        "createdAt": "2026-03-01T23:26:47.865Z",
+        "updatedAt": "2026-03-01T23:26:47.865Z"
+      }
     ]
   ],
-  "counter": 5,
-  "updatedAt": "2026-02-26T00:23:14.686Z"
+  "counter": 6,
+  "updatedAt": "2026-03-01T23:26:47.961Z"
 }
