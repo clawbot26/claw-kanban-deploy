@@ -62,8 +62,20 @@
         "createdAt": "2026-03-01T23:26:47.865Z",
         "updatedAt": "2026-03-01T23:26:47.865Z"
       }
+    ],
+    [
+      "task-6",
+      {
+        "id": "task-6",
+        "title": "Weekly memory maintenance automation",
+        "description": "Created weekly-memory-maintenance.sh automation script. Analyzes MEMORY.md for duplicates/stale items, generates maintenance reports, and syncs to 2nd Brain. Found 1 duplicate constraint to review.",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-03-02T05:00:49.597Z",
+        "updatedAt": "2026-03-02T05:00:49.597Z"
+      }
     ]
   ],
-  "counter": 6,
-  "updatedAt": "2026-03-01T23:26:47.961Z"
+  "counter": 7,
+  "updatedAt": "2026-03-02T05:00:49.704Z"
 }
