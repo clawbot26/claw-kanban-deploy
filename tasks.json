@@ -74,8 +74,20 @@
         "createdAt": "2026-03-02T05:00:49.597Z",
         "updatedAt": "2026-03-02T05:00:49.597Z"
       }
+    ],
+    [
+      "task-7",
+      {
+        "id": "task-7",
+        "title": "Complete: Front-End Diagnostic Assessment (24 questions)",
+        "description": "Full diagnostic covering JS fundamentals, React, Next.js, TypeScript, CSS, Testing, System Design, Performance, Accessibility, Algorithms, DevOps, Behavioral. Answer all 24 questions to establish baseline.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-02T16:01:51.902Z",
+        "updatedAt": "2026-03-02T16:01:51.902Z"
+      }
     ]
   ],
-  "counter": 7,
-  "updatedAt": "2026-03-02T05:00:49.704Z"
+  "counter": 8,
+  "updatedAt": "2026-03-02T16:01:52.015Z"
 }
