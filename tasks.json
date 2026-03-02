@@ -86,8 +86,20 @@
         "createdAt": "2026-03-02T16:01:51.902Z",
         "updatedAt": "2026-03-02T16:01:51.902Z"
       }
+    ],
+    [
+      "task-8",
+      {
+        "id": "task-8",
+        "title": "Build: Task Management Dashboard",
+        "description": "Portfolio project to fill state management gap. Features: Kanban board with drag-drop (dnd-kit), Zustand for client state, React Query for server state, optimistic updates, real-time collaboration mock. Stack: Next.js 15, TypeScript, Tailwind CSS, Zustand, TanStack Query, shadcn/ui. Deploy to Vercel. Why: 80% of job postings mention state management - current resume lacks this keyword.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-02T17:02:14.153Z",
+        "updatedAt": "2026-03-02T17:02:14.153Z"
+      }
     ]
   ],
-  "counter": 8,
-  "updatedAt": "2026-03-02T16:01:52.015Z"
+  "counter": 9,
+  "updatedAt": "2026-03-02T17:02:14.259Z"
 }
