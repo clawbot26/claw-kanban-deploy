@@ -122,8 +122,21 @@
         "createdAt": "2026-03-03T05:40:39.562Z",
         "updatedAt": "2026-03-03T05:40:39.562Z"
       }
+    ],
+    [
+      "task-11",
+      {
+        "id": "task-11",
+        "title": "Test: API sync verification",
+        "description": "Verifying kanban-create-task.sh posts to deployed API",
+        "status": "done",
+        "priority": "low",
+        "assignee": "clawai",
+        "createdAt": "2026-03-03T06:55:59.739Z",
+        "updatedAt": "2026-03-03T06:55:59.739Z"
+      }
     ]
   ],
-  "counter": 11,
-  "updatedAt": "2026-03-03T05:40:39.653Z"
+  "counter": 12,
+  "updatedAt": "2026-03-03T06:55:59.830Z"
 }
