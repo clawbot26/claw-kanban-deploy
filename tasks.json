@@ -110,8 +110,20 @@
         "createdAt": "2026-03-03T05:01:01.417Z",
         "updatedAt": "2026-03-03T05:01:01.417Z"
       }
+    ],
+    [
+      "task-10",
+      {
+        "id": "task-10",
+        "title": "Next.js App Router data fetching + Server/Client Components drill",
+        "description": "Cover Q5/Q6 gaps: explain Server vs Client Components with examples; caching/revalidation/streaming for realtime dashboard vs static page. Provide practice prompts and code snippets.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-03T05:40:39.562Z",
+        "updatedAt": "2026-03-03T05:40:39.562Z"
+      }
     ]
   ],
-  "counter": 10,
-  "updatedAt": "2026-03-03T05:01:01.505Z"
+  "counter": 11,
+  "updatedAt": "2026-03-03T05:40:39.653Z"
 }
