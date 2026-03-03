@@ -6,10 +6,10 @@
         "id": "task-1",
         "title": "Persistent Task Test",
         "description": "This task should survive redeploys",
-        "status": "backlog",
+        "status": "done",
         "priority": "high",
         "createdAt": "2026-02-25T23:10:21.377Z",
-        "updatedAt": "2026-02-25T23:10:21.377Z"
+        "updatedAt": "2026-03-03T07:10:47.045Z"
       }
     ],
     [
@@ -138,5 +138,5 @@
     ]
   ],
   "counter": 12,
-  "updatedAt": "2026-03-03T07:10:38.657Z"
+  "updatedAt": "2026-03-03T07:10:47.144Z"
 }
