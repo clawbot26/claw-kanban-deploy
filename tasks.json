@@ -135,8 +135,20 @@
         "createdAt": "2026-03-03T06:55:59.739Z",
         "updatedAt": "2026-03-03T06:55:59.739Z"
       }
+    ],
+    [
+      "task-12",
+      {
+        "id": "task-12",
+        "title": "Practice: React Hooks - Build a useLocalStorage Hook",
+        "description": "Build a custom useLocalStorage hook from scratch. Covers useState, useEffect, JSON serialization, and SSR safety. Skill: React, Level: beginner, Market demand: 80%+ of listings",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-03T16:00:55.949Z",
+        "updatedAt": "2026-03-03T16:00:55.949Z"
+      }
     ]
   ],
-  "counter": 12,
-  "updatedAt": "2026-03-03T07:10:47.144Z"
+  "counter": 13,
+  "updatedAt": "2026-03-03T16:00:56.076Z"
 }
