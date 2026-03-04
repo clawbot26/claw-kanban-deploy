@@ -159,8 +159,20 @@
         "createdAt": "2026-03-04T05:00:41.517Z",
         "updatedAt": "2026-03-04T05:00:41.517Z"
       }
+    ],
+    [
+      "task-14",
+      {
+        "id": "task-14",
+        "title": "Practice: Type a React UserCard component with API data",
+        "description": "Convert an untyped React component to fully typed TypeScript — props, state, API response, event handlers. Skill: TypeScript, Level: beginner, Market demand: 85%+",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-04T16:00:34.865Z",
+        "updatedAt": "2026-03-04T16:00:34.865Z"
+      }
     ]
   ],
-  "counter": 14,
-  "updatedAt": "2026-03-04T05:00:41.601Z"
+  "counter": 15,
+  "updatedAt": "2026-03-04T16:00:34.983Z"
 }
