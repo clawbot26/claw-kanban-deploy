@@ -147,8 +147,20 @@
         "createdAt": "2026-03-03T16:00:55.949Z",
         "updatedAt": "2026-03-03T16:00:55.949Z"
       }
+    ],
+    [
+      "task-13",
+      {
+        "id": "task-13",
+        "title": "Heartbeat State Tracking System",
+        "description": "Created heartbeat-state.json tracking system for intelligent periodic monitoring. Tracks last check times for email/calendar/weather/memory/cron/kanban/X with configurable intervals and rotation logic. Updated HEARTBEAT.md with usage docs.",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-03-04T05:00:41.517Z",
+        "updatedAt": "2026-03-04T05:00:41.517Z"
+      }
     ]
   ],
-  "counter": 13,
-  "updatedAt": "2026-03-03T16:00:56.076Z"
+  "counter": 14,
+  "updatedAt": "2026-03-04T05:00:41.601Z"
 }
