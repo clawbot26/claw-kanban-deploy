@@ -207,8 +207,20 @@
         "createdAt": "2026-03-05T05:01:25.395Z",
         "updatedAt": "2026-03-05T05:01:25.395Z"
       }
+    ],
+    [
+      "task-18",
+      {
+        "id": "task-18",
+        "title": "Practice: Build Typed SearchFilter Component (React+TS)",
+        "description": "Build a SearchFilter component with TypeScript generics, useState/useEffect hooks, debounced input, and proper event typing. Skill: React + TypeScript, Level: beginner, Market demand: 90%+",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-05T16:00:39.770Z",
+        "updatedAt": "2026-03-05T16:00:39.770Z"
+      }
     ]
   ],
-  "counter": 18,
-  "updatedAt": "2026-03-05T05:01:25.501Z"
+  "counter": 19,
+  "updatedAt": "2026-03-05T16:00:39.899Z"
 }
