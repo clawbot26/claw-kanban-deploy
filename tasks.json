@@ -231,8 +231,20 @@
         "createdAt": "2026-03-05T17:01:18.975Z",
         "updatedAt": "2026-03-05T17:01:18.975Z"
       }
+    ],
+    [
+      "task-20",
+      {
+        "id": "task-20",
+        "title": "X Engagement - Morning Browse",
+        "description": "X engagement: morning niche browsing session - analyzed 50+ tweets across longevity/biohacking/sleep/metabolic health, proposed 8 likes, 2 RTs, 3 replies, 3 follows for approval",
+        "status": "pending-review",
+        "priority": "medium",
+        "createdAt": "2026-03-05T17:04:39.357Z",
+        "updatedAt": "2026-03-05T17:04:39.357Z"
+      }
     ]
   ],
-  "counter": 20,
-  "updatedAt": "2026-03-05T17:01:19.087Z"
+  "counter": 21,
+  "updatedAt": "2026-03-05T17:04:39.477Z"
 }
