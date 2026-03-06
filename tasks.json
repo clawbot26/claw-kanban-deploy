@@ -243,8 +243,20 @@
         "createdAt": "2026-03-05T17:04:39.357Z",
         "updatedAt": "2026-03-05T17:04:39.357Z"
       }
+    ],
+    [
+      "task-21",
+      {
+        "id": "task-21",
+        "title": "Fix cron job model configuration",
+        "description": "Fixed broken cron job 'Job applications: spreadsheet sync' — changed invalid model 'haiku' to valid 'kimi-k2p5'. Script now syncs 554 applications daily at 06:00 UTC.",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-03-06T05:00:38.283Z",
+        "updatedAt": "2026-03-06T05:00:38.283Z"
+      }
     ]
   ],
-  "counter": 21,
-  "updatedAt": "2026-03-05T17:04:39.477Z"
+  "counter": 22,
+  "updatedAt": "2026-03-06T05:00:38.375Z"
 }
