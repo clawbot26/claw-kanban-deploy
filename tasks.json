@@ -279,8 +279,20 @@
         "createdAt": "2026-03-06T20:31:34.565Z",
         "updatedAt": "2026-03-06T20:31:34.565Z"
       }
+    ],
+    [
+      "task-24",
+      {
+        "id": "task-24",
+        "title": "Fix X post image paths",
+        "description": "Fixed X posting image path issue: moved from /tmp to workspace media directory, updated generate-x-image.py defaults, updated TOOLS.md docs, migrated existing images and updated pending posts JSON",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-07T05:01:43.150Z",
+        "updatedAt": "2026-03-07T05:01:43.150Z"
+      }
     ]
   ],
-  "counter": 24,
-  "updatedAt": "2026-03-06T20:31:34.655Z"
+  "counter": 25,
+  "updatedAt": "2026-03-07T05:01:43.270Z"
 }
