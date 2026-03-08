@@ -291,8 +291,20 @@
         "createdAt": "2026-03-07T05:01:43.150Z",
         "updatedAt": "2026-03-07T05:01:43.150Z"
       }
+    ],
+    [
+      "task-25",
+      {
+        "id": "task-25",
+        "title": "Cron error tracking system",
+        "description": "Built cron error tracking bridge: syncs OpenClaw job errors to diagnostics system. New scripts: cron-error-tracker.js (parses jobs.json, writes status + error logs), sync-cron-errors.sh (wrapper). Now diagnostics shows actual error messages instead of 'No errors recorded'. Identified 3 failing jobs with specific errors: auth profile missing, delivery failure, model not allowed.",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-08T05:04:37.429Z",
+        "updatedAt": "2026-03-08T05:04:37.429Z"
+      }
     ]
   ],
-  "counter": 25,
-  "updatedAt": "2026-03-07T05:01:43.270Z"
+  "counter": 26,
+  "updatedAt": "2026-03-08T05:04:37.529Z"
 }
