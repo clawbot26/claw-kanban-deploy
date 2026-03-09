@@ -315,8 +315,20 @@
         "createdAt": "2026-03-09T01:31:22.268Z",
         "updatedAt": "2026-03-09T01:31:22.268Z"
       }
+    ],
+    [
+      "task-27",
+      {
+        "id": "task-27",
+        "title": "Cron jobs infrastructure diagnosis",
+        "description": "Identified and documented critical cron job infrastructure issue: 6 jobs failing due to invalid model overrides (opus/kimi-k2p5 without valid auth). JSON file also has structural corruption at line 135. Created detailed fix plan at infrastructure/cron-jobs-fix-needed.md.",
+        "status": "done",
+        "priority": "urgent",
+        "createdAt": "2026-03-09T05:06:40.417Z",
+        "updatedAt": "2026-03-09T05:06:40.417Z"
+      }
     ]
   ],
-  "counter": 27,
-  "updatedAt": "2026-03-09T01:31:22.373Z"
+  "counter": 28,
+  "updatedAt": "2026-03-09T05:06:40.506Z"
 }
