@@ -339,8 +339,20 @@
         "createdAt": "2026-03-09T14:03:50.516Z",
         "updatedAt": "2026-03-09T14:03:50.516Z"
       }
+    ],
+    [
+      "task-29",
+      {
+        "id": "task-29",
+        "title": "Build: SaaS Dashboard Portfolio Project (Tailwind + Performance + A11y)",
+        "description": "Gap-filling portfolio project to demonstrate senior-level frontend skills:\n\n**Tech Stack:**\n- Next.js 14+ (App Router)\n- TypeScript\n- Tailwind CSS (fills major resume gap)\n- Zustand or Redux Toolkit (state management)\n- React Query (server state)\n- Recharts/Tremor (data viz)\n- Jest + React Testing Library\n- Storybook\n- Lighthouse CI\n\n**Features (2-week scope):**\n1. Data-heavy dashboard with virtualized table (10K+ rows)\n2. Real-time updates via WebSocket/polling with optimistic UI\n3. Dark/light mode with Tailwind\n4. Full keyboard navigation (a11y showcase)\n5. Performance targets: Lighthouse 95+\n\n**Outcome:** Portfolio piece demonstrating Tailwind, advanced state management, performance optimization, and accessibility — directly addressing resume gaps.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-09T17:03:41.973Z",
+        "updatedAt": "2026-03-09T17:03:41.973Z"
+      }
     ]
   ],
-  "counter": 29,
-  "updatedAt": "2026-03-09T14:03:50.632Z"
+  "counter": 30,
+  "updatedAt": "2026-03-09T17:03:42.115Z"
 }
