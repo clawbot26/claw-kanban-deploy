@@ -363,8 +363,20 @@
         "createdAt": "2026-03-10T14:02:03.163Z",
         "updatedAt": "2026-03-10T14:02:03.163Z"
       }
+    ],
+    [
+      "task-31",
+      {
+        "id": "task-31",
+        "title": "Practice: TypeScript React Todo with Custom Hook",
+        "description": "Build a Todo app with TypeScript including: typed props/interfaces, custom useLocalStorage hook for persistence, useState/useEffect patterns, memoization for filtered lists. Skill: React + TypeScript, Level: beginner, Market demand: 100% of top leads",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-11T16:00:30.234Z",
+        "updatedAt": "2026-03-11T16:00:30.234Z"
+      }
     ]
   ],
-  "counter": 31,
-  "updatedAt": "2026-03-10T14:02:03.285Z"
+  "counter": 32,
+  "updatedAt": "2026-03-11T16:00:30.396Z"
 }
