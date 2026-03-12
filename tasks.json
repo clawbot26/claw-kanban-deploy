@@ -387,8 +387,20 @@
         "createdAt": "2026-03-12T16:00:18.962Z",
         "updatedAt": "2026-03-12T16:00:18.962Z"
       }
+    ],
+    [
+      "task-33",
+      {
+        "id": "task-33",
+        "title": "Build: AI-Powered Analytics Dashboard with React Query + Tailwind",
+        "description": "Gap-filling project to demonstrate modern state management and styling:\n\nTECH STACK:\n- Next.js 14 (App Router)\n- TypeScript\n- Tailwind CSS (learn this)\n- React Query (TanStack Query) for server state\n- Zustand for client state\n- Recharts for data visualization\n- shadcn/ui components\n\nFEATURES:\n- Real-time data fetching with React Query\n- Complex dashboard with filters, sorting\n- Theme switching (dark/light)\n- Responsive design\n- Performance optimized with React.memo, useMemo\n\nWHY IT MATTERS:\n- Fills Tailwind CSS gap (every job posting mentions this)\n- Demonstrates modern state management (React Query + Zustand)\n- Shows data viz skills for AI/healthcare companies\n- Uses shadcn/ui (trending component library)\n\nDELIVERABLES:\n- Deployed on Vercel\n- GitHub repo with README\n- Blog post explaining architecture decisions",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-12T17:00:40.272Z",
+        "updatedAt": "2026-03-12T17:00:40.272Z"
+      }
     ]
   ],
-  "counter": 33,
-  "updatedAt": "2026-03-12T16:00:19.088Z"
+  "counter": 34,
+  "updatedAt": "2026-03-12T17:00:40.390Z"
 }
