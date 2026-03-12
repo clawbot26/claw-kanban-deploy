@@ -375,8 +375,20 @@
         "createdAt": "2026-03-11T16:00:30.234Z",
         "updatedAt": "2026-03-11T16:00:30.234Z"
       }
+    ],
+    [
+      "task-32",
+      {
+        "id": "task-32",
+        "title": "Practice: Build useDebounce & useLocalStorage Hooks",
+        "description": "Implement production-ready custom hooks with proper dependency management, TypeScript support, and cleanup handling. Skill: React Hooks, Level: beginner, Market demand: 100%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-12T16:00:18.962Z",
+        "updatedAt": "2026-03-12T16:00:18.962Z"
+      }
     ]
   ],
-  "counter": 32,
-  "updatedAt": "2026-03-11T16:00:30.396Z"
+  "counter": 33,
+  "updatedAt": "2026-03-12T16:00:19.088Z"
 }
