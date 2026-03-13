@@ -399,8 +399,20 @@
         "createdAt": "2026-03-12T17:00:40.272Z",
         "updatedAt": "2026-03-12T17:00:40.272Z"
       }
+    ],
+    [
+      "task-34",
+      {
+        "id": "task-34",
+        "title": "Workflow improvements - cron & X monitoring",
+        "description": "Fixed job-scout and resume-coach agentId fields; Created x-workflow-monitor.js to detect stuck X posts; Updated daily dashboard digest to include X workflow status checks",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-13T05:02:05.116Z",
+        "updatedAt": "2026-03-13T05:02:05.116Z"
+      }
     ]
   ],
-  "counter": 34,
-  "updatedAt": "2026-03-12T17:00:40.390Z"
+  "counter": 35,
+  "updatedAt": "2026-03-13T05:02:05.219Z"
 }
