@@ -447,8 +447,20 @@
         "createdAt": "2026-03-14T05:03:11.868Z",
         "updatedAt": "2026-03-14T05:03:11.868Z"
       }
+    ],
+    [
+      "task-38",
+      {
+        "id": "task-38",
+        "title": "Practice: Debounced Search Component with React Hooks",
+        "description": "Build optimized search component with useDebounce, AbortController for race conditions, useMemo for result transforms. Test with React DevTools Profiler. - Skill: React Hooks & Performance, Level: beginner, Market demand: 80%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-14T16:00:27.417Z",
+        "updatedAt": "2026-03-14T16:00:27.417Z"
+      }
     ]
   ],
-  "counter": 38,
-  "updatedAt": "2026-03-14T05:03:11.969Z"
+  "counter": 39,
+  "updatedAt": "2026-03-14T16:00:27.502Z"
 }
