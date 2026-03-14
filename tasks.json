@@ -435,8 +435,20 @@
         "createdAt": "2026-03-13T17:00:51.038Z",
         "updatedAt": "2026-03-13T17:00:51.038Z"
       }
+    ],
+    [
+      "task-37",
+      {
+        "id": "task-37",
+        "title": "Workflow: Cron error tracking & auth fixes",
+        "description": "Fixed tech-coach agent auth: added DeepSeek API profile, removed Anthropic fallback (disabled due to billing), added cron-health-quick.sh script for categorized error diagnostics",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-14T05:03:11.868Z",
+        "updatedAt": "2026-03-14T05:03:11.868Z"
+      }
     ]
   ],
-  "counter": 37,
-  "updatedAt": "2026-03-13T17:00:51.150Z"
+  "counter": 38,
+  "updatedAt": "2026-03-14T05:03:11.969Z"
 }
