@@ -459,8 +459,20 @@
         "createdAt": "2026-03-14T16:00:27.417Z",
         "updatedAt": "2026-03-14T16:00:27.417Z"
       }
+    ],
+    [
+      "task-39",
+      {
+        "id": "task-39",
+        "title": "Cron delivery fix — channel format",
+        "description": "Fixed cron job delivery channel format: Added 'channel:' prefix to all Discord delivery configs that were missing it. Fixed jobs: job-scout, resume-coach, X profile optimization, X morning engagement, X midday post, and all X/web-presence jobs for consistency. Root cause was inconsistent 'to' field format causing 'cron announce delivery failed' errors.",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-15T05:02:12.253Z",
+        "updatedAt": "2026-03-15T05:02:12.253Z"
+      }
     ]
   ],
-  "counter": 39,
-  "updatedAt": "2026-03-14T16:00:27.502Z"
+  "counter": 40,
+  "updatedAt": "2026-03-15T05:02:12.338Z"
 }
