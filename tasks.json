@@ -471,8 +471,20 @@
         "createdAt": "2026-03-15T05:02:12.253Z",
         "updatedAt": "2026-03-15T05:02:12.253Z"
       }
+    ],
+    [
+      "task-40",
+      {
+        "id": "task-40",
+        "title": "Practice: React Performance Optimization Exercise",
+        "description": "Fix the SearchResults component: implement useDebounce hook, add useMemo for heavySearch, use React.memo + useCallback for ResultItem, fix key prop issue. Target companies: Airbnb, Pinterest, Close, SoSafe, Hopper - all fit 9 leads requiring React mastery.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-15T16:01:31.249Z",
+        "updatedAt": "2026-03-15T16:01:31.249Z"
+      }
     ]
   ],
-  "counter": 40,
-  "updatedAt": "2026-03-15T05:02:12.338Z"
+  "counter": 41,
+  "updatedAt": "2026-03-15T16:01:31.339Z"
 }
