@@ -483,8 +483,20 @@
         "createdAt": "2026-03-15T16:01:31.249Z",
         "updatedAt": "2026-03-15T16:01:31.249Z"
       }
+    ],
+    [
+      "task-41",
+      {
+        "id": "task-41",
+        "title": "Agent SKILL.md restoration",
+        "description": "Fixed missing agent SKILL.md files causing cron delivery failures. Created SKILL.md for web-presence (X posting) and lauren (coding) agents. Fixed job-scout sessions.json corruption.",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-16T05:01:56.042Z",
+        "updatedAt": "2026-03-16T05:01:56.042Z"
+      }
     ]
   ],
-  "counter": 41,
-  "updatedAt": "2026-03-15T16:01:31.339Z"
+  "counter": 42,
+  "updatedAt": "2026-03-16T05:01:56.130Z"
 }
