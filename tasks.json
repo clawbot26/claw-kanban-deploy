@@ -495,8 +495,20 @@
         "createdAt": "2026-03-16T05:01:56.042Z",
         "updatedAt": "2026-03-16T05:01:56.042Z"
       }
+    ],
+    [
+      "task-42",
+      {
+        "id": "task-42",
+        "title": "Practice: Optimized Search with useDebounce",
+        "description": "Build debounced search component with race condition prevention, loading states, and React.memo optimization. Directly maps to Zocdoc Staff Frontend and Airwallex Staff Frontend interview requirements. Skill: React, Level: beginner → intermediate, Market demand: 90%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-16T16:00:53.004Z",
+        "updatedAt": "2026-03-16T16:00:53.004Z"
+      }
     ]
   ],
-  "counter": 42,
-  "updatedAt": "2026-03-16T05:01:56.130Z"
+  "counter": 43,
+  "updatedAt": "2026-03-16T16:00:53.171Z"
 }
