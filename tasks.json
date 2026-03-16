@@ -507,8 +507,20 @@
         "createdAt": "2026-03-16T16:00:53.004Z",
         "updatedAt": "2026-03-16T16:00:53.004Z"
       }
+    ],
+    [
+      "task-43",
+      {
+        "id": "task-43",
+        "title": "Build: AI-Powered Dashboard with Real-Time Collaboration",
+        "description": "Portfolio project to fill AI integration gap and demonstrate modern frontend skills. Stack: Next.js 15 + TypeScript + Tailwind CSS + OpenAI API + Supabase + real-time collaboration (Socket.io). Features: Auth (NextAuth.js), AI chat interface, live collaborative editing, responsive Tailwind design, 90%+ test coverage, CI/CD via GitHub Actions. Deploy to Vercel. Timeline: 1-2 weeks.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-16T17:00:48.418Z",
+        "updatedAt": "2026-03-16T17:00:48.418Z"
+      }
     ]
   ],
-  "counter": 43,
-  "updatedAt": "2026-03-16T16:00:53.171Z"
+  "counter": 44,
+  "updatedAt": "2026-03-16T17:00:48.536Z"
 }
