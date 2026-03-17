@@ -567,8 +567,20 @@
         "createdAt": "2026-03-17T16:02:00.101Z",
         "updatedAt": "2026-03-17T16:02:00.101Z"
       }
+    ],
+    [
+      "task-48",
+      {
+        "id": "task-48",
+        "title": "X morning niche browsing",
+        "description": "X engagement session: found 7 like targets, 2 retweets, 3 reply opportunities, 3 follow targets in health/longevity niche",
+        "status": "in-progress",
+        "priority": "medium",
+        "createdAt": "2026-03-17T17:00:40.187Z",
+        "updatedAt": "2026-03-17T17:00:40.187Z"
+      }
     ]
   ],
-  "counter": 48,
-  "updatedAt": "2026-03-17T16:02:00.239Z"
+  "counter": 49,
+  "updatedAt": "2026-03-17T17:00:40.338Z"
 }
