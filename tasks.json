@@ -555,8 +555,20 @@
         "createdAt": "2026-03-17T16:00:28.332Z",
         "updatedAt": "2026-03-17T16:00:28.332Z"
       }
+    ],
+    [
+      "task-47",
+      {
+        "id": "task-47",
+        "title": "Morning X post draft - Zone 2 efficiency",
+        "description": "Composed morning X post: Zone 2 cardio efficiency myth-busting tweet with generated image",
+        "status": "pending-review",
+        "priority": "medium",
+        "createdAt": "2026-03-17T16:02:00.101Z",
+        "updatedAt": "2026-03-17T16:02:00.101Z"
+      }
     ]
   ],
-  "counter": 47,
-  "updatedAt": "2026-03-17T16:00:28.461Z"
+  "counter": 48,
+  "updatedAt": "2026-03-17T16:02:00.239Z"
 }
