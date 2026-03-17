@@ -543,8 +543,20 @@
         "createdAt": "2026-03-17T05:00:35.557Z",
         "updatedAt": "2026-03-17T05:00:35.557Z"
       }
+    ],
+    [
+      "task-46",
+      {
+        "id": "task-46",
+        "title": "Practice: React Custom Hooks - Debounced User Search",
+        "description": "Build a searchable, debounced user list with custom useDebounce and useFetchUsers hooks. Must handle: 500ms debounce, AbortController cancellation, loading/error states, unmount cleanup, pagination. Starter code provided. Time: 90-120 min. Skill: React Hooks & Patterns, Level: beginner, Market demand: 100% of top leads this week",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-17T16:00:28.332Z",
+        "updatedAt": "2026-03-17T16:00:28.332Z"
+      }
     ]
   ],
-  "counter": 46,
-  "updatedAt": "2026-03-17T05:00:35.648Z"
+  "counter": 47,
+  "updatedAt": "2026-03-17T16:00:28.461Z"
 }
