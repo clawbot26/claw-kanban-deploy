@@ -579,8 +579,20 @@
         "createdAt": "2026-03-17T17:00:40.187Z",
         "updatedAt": "2026-03-17T17:00:40.187Z"
       }
+    ],
+    [
+      "task-49",
+      {
+        "id": "task-49",
+        "title": "Cron error diagnostics enhancement",
+        "description": "Enhanced cron error tracking with root-cause analysis: added 6 error categories (agent_session, model_auth, model_timeout, delivery, execution, timeout), hints for each error type, suggested fixes, and human-readable diagnostics output. Updated cron-error-tracker.js and cron-diagnostics.sh.",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-03-18T05:01:23.213Z",
+        "updatedAt": "2026-03-18T05:01:23.213Z"
+      }
     ]
   ],
-  "counter": 49,
-  "updatedAt": "2026-03-17T17:00:40.338Z"
+  "counter": 50,
+  "updatedAt": "2026-03-18T05:01:23.310Z"
 }
