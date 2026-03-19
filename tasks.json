@@ -615,8 +615,20 @@
         "createdAt": "2026-03-18T17:00:45.947Z",
         "updatedAt": "2026-03-18T17:00:45.947Z"
       }
+    ],
+    [
+      "task-52",
+      {
+        "id": "task-52",
+        "title": "Practice: Typed Product Dashboard",
+        "description": "Build a fully TypeScript-React product dashboard with: Product interface, generic ProductList component, useProductFilter custom hook with useMemo, ProductDetail with type guards. Must have zero any types.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-19T16:00:38.159Z",
+        "updatedAt": "2026-03-19T16:00:38.159Z"
+      }
     ]
   ],
-  "counter": 52,
-  "updatedAt": "2026-03-18T17:00:46.118Z"
+  "counter": 53,
+  "updatedAt": "2026-03-19T16:00:38.330Z"
 }
