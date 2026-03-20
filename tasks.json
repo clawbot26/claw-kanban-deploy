@@ -651,8 +651,20 @@
         "createdAt": "2026-03-20T14:02:25.953Z",
         "updatedAt": "2026-03-20T14:02:25.953Z"
       }
+    ],
+    [
+      "task-55",
+      {
+        "id": "task-55",
+        "title": "Practice: Build useSearch Hook with Debounce & Caching",
+        "description": "Implement React hook with 300ms debounce, request cancellation via AbortController, result caching in useRef, loading/error states. Maps to Zocdoc Staff Frontend Search role requirements.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-20T16:00:34.483Z",
+        "updatedAt": "2026-03-20T16:00:34.483Z"
+      }
     ]
   ],
-  "counter": 55,
-  "updatedAt": "2026-03-20T14:02:26.047Z"
+  "counter": 56,
+  "updatedAt": "2026-03-20T16:00:34.610Z"
 }
