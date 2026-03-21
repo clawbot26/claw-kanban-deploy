@@ -675,8 +675,20 @@
         "createdAt": "2026-03-21T05:00:48.697Z",
         "updatedAt": "2026-03-21T05:00:48.697Z"
       }
+    ],
+    [
+      "task-57",
+      {
+        "id": "task-57",
+        "title": "Practice: Type-Safe DataTable Component",
+        "description": "Build a generic DataTable component with: (1) Column type using keyof T, (2) type-safe sorting with asc/desc, (3) optional row selection callback, (4) render prop for custom cells, (5) use Pick/Omit/Partial in usage example. Skill: TypeScript + React, Level: beginner, Market demand: 70% of current leads require TypeScript.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-21T16:00:44.783Z",
+        "updatedAt": "2026-03-21T16:00:44.783Z"
+      }
     ]
   ],
-  "counter": 57,
-  "updatedAt": "2026-03-21T05:00:48.812Z"
+  "counter": 58,
+  "updatedAt": "2026-03-21T16:00:44.900Z"
 }
