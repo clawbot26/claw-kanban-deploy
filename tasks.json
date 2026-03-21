@@ -687,8 +687,20 @@
         "createdAt": "2026-03-21T16:00:44.783Z",
         "updatedAt": "2026-03-21T16:00:44.783Z"
       }
+    ],
+    [
+      "task-58",
+      {
+        "id": "task-58",
+        "title": "Morning X post: Magnesium gut health",
+        "description": "Composed morning X post draft: magnesium gut longevity angle (273 chars, longevity-science pillar, with AI-generated image). Pending Dave approval.",
+        "status": "pending-review",
+        "priority": "medium",
+        "createdAt": "2026-03-21T16:02:33.222Z",
+        "updatedAt": "2026-03-21T16:02:33.222Z"
+      }
     ]
   ],
-  "counter": 58,
-  "updatedAt": "2026-03-21T16:00:44.900Z"
+  "counter": 59,
+  "updatedAt": "2026-03-21T16:02:33.327Z"
 }
