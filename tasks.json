@@ -785,8 +785,20 @@
         "createdAt": "2026-03-22T16:01:21.429Z",
         "updatedAt": "2026-03-22T16:01:21.429Z"
       }
+    ],
+    [
+      "task-66",
+      {
+        "id": "task-66",
+        "title": "X API Credits Exhausted",
+        "description": "X engagement session BLOCKED - Twitter API credits depleted for @tune_d_. Cannot search, browse, or engage. Last successful session: March 21. Needs API credit replenishment.",
+        "status": "pending-review",
+        "priority": "high",
+        "createdAt": "2026-03-22T17:00:14.719Z",
+        "updatedAt": "2026-03-22T17:00:14.719Z"
+      }
     ]
   ],
-  "counter": 66,
-  "updatedAt": "2026-03-22T16:01:21.505Z"
+  "counter": 67,
+  "updatedAt": "2026-03-22T17:00:14.807Z"
 }
