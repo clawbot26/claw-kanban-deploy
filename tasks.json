@@ -761,8 +761,20 @@
         "createdAt": "2026-03-22T07:00:31.048Z",
         "updatedAt": "2026-03-22T07:00:31.048Z"
       }
+    ],
+    [
+      "task-64",
+      {
+        "id": "task-64",
+        "title": "Practice: React Hooks — Searchable Paginated Data Table",
+        "description": "Build UserDirectory component with: custom useDebounce hook (with delay deps), custom useUsers hook (with AbortController cleanup), React.memo for list items, useCallback for stable callbacks. Fetch from jsonplaceholder API, 5 users per page, 300ms debounce. Acceptance: no re-renders on typing, request cancellation on search change.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-22T16:00:35.094Z",
+        "updatedAt": "2026-03-22T16:00:35.094Z"
+      }
     ]
   ],
-  "counter": 64,
-  "updatedAt": "2026-03-22T07:00:31.130Z"
+  "counter": 65,
+  "updatedAt": "2026-03-22T16:00:35.206Z"
 }
