@@ -748,8 +748,21 @@
         "createdAt": "2026-03-22T07:00:30.239Z",
         "updatedAt": "2026-03-22T07:00:30.239Z"
       }
+    ],
+    [
+      "task-63",
+      {
+        "id": "task-63",
+        "title": "Communication: Book Summary First",
+        "description": "When recommending books, always provide summary + key points before asking user to read.",
+        "status": "backlog",
+        "priority": "medium",
+        "assignee": "clawai",
+        "createdAt": "2026-03-22T07:00:31.048Z",
+        "updatedAt": "2026-03-22T07:00:31.048Z"
+      }
     ]
   ],
-  "counter": 63,
-  "updatedAt": "2026-03-22T07:00:30.326Z"
+  "counter": 64,
+  "updatedAt": "2026-03-22T07:00:31.130Z"
 }
