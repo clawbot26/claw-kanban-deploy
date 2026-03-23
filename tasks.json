@@ -833,8 +833,20 @@
         "createdAt": "2026-03-23T17:00:34.009Z",
         "updatedAt": "2026-03-23T17:00:34.009Z"
       }
+    ],
+    [
+      "task-70",
+      {
+        "id": "task-70",
+        "title": "Morning Brief System Upgrade",
+        "description": "Upgraded morning brief system: Added breaking news sweep protocol, SearXNG searches for all categories, headlines verification against CNN/NYT/Reuters, and explicit priority rules for major incidents. Will now catch stories like LaGuardia crash.",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-23T19:22:26.490Z",
+        "updatedAt": "2026-03-23T19:22:26.490Z"
+      }
     ]
   ],
-  "counter": 70,
-  "updatedAt": "2026-03-23T17:00:34.143Z"
+  "counter": 71,
+  "updatedAt": "2026-03-23T19:22:26.589Z"
 }
