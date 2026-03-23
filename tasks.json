@@ -821,8 +821,20 @@
         "createdAt": "2026-03-23T16:00:57.549Z",
         "updatedAt": "2026-03-23T16:00:57.549Z"
       }
+    ],
+    [
+      "task-69",
+      {
+        "id": "task-69",
+        "title": "Build: AI-Integrated Document Q&A Dashboard",
+        "description": "Next.js 14+ app with TypeScript, Tailwind CSS. Integrate OpenAI API or LangChain for document Q&A. Use vector database (Pinecone/Supabase pgvector) for embeddings. Drag-and-drop PDF upload, chat interface with streaming. Deploy on Vercel. Fills AI/LLM gap — top 2026 differentiator for frontend roles. Time: 1-2 weeks.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-23T17:00:34.009Z",
+        "updatedAt": "2026-03-23T17:00:34.009Z"
+      }
     ]
   ],
-  "counter": 69,
-  "updatedAt": "2026-03-23T16:00:57.660Z"
+  "counter": 70,
+  "updatedAt": "2026-03-23T17:00:34.143Z"
 }
