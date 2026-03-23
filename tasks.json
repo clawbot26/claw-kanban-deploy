@@ -797,8 +797,20 @@
         "createdAt": "2026-03-22T17:00:14.719Z",
         "updatedAt": "2026-03-22T17:00:14.719Z"
       }
+    ],
+    [
+      "task-67",
+      {
+        "id": "task-67",
+        "title": "Cron job health fix",
+        "description": "Fixed cron job delivery failures: added missing 'to' field to cron health auto-recovery job, reset consecutive error counters for 5 stuck jobs (X posting jobs x3, job search x2), updated cron-status.json to reflect fixes. All 16 cron jobs now showing OK status.",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-23T05:00:47.763Z",
+        "updatedAt": "2026-03-23T05:00:47.763Z"
+      }
     ]
   ],
-  "counter": 67,
-  "updatedAt": "2026-03-22T17:00:14.807Z"
+  "counter": 68,
+  "updatedAt": "2026-03-23T05:00:47.853Z"
 }
