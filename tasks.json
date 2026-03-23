@@ -809,8 +809,20 @@
         "createdAt": "2026-03-23T05:00:47.763Z",
         "updatedAt": "2026-03-23T05:00:47.763Z"
       }
+    ],
+    [
+      "task-68",
+      {
+        "id": "task-68",
+        "title": "Practice: React Hooks - useDebounce & useLocalStorage",
+        "description": "Build custom hooks from scratch with proper cleanup and dependencies. Skill: React, Level: beginner, Market demand: 100% of listings. Target companies: Spotter, Xealth, Giga, Figma, Marqeta",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-23T16:00:57.549Z",
+        "updatedAt": "2026-03-23T16:00:57.549Z"
+      }
     ]
   ],
-  "counter": 68,
-  "updatedAt": "2026-03-23T05:00:47.853Z"
+  "counter": 69,
+  "updatedAt": "2026-03-23T16:00:57.660Z"
 }
