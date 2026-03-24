@@ -845,8 +845,20 @@
         "createdAt": "2026-03-23T19:22:26.490Z",
         "updatedAt": "2026-03-23T19:22:26.490Z"
       }
+    ],
+    [
+      "task-71",
+      {
+        "id": "task-71",
+        "title": "Practice: React Hooks & useDebounce Implementation",
+        "description": "Build a custom useDebounce hook and integrate into an optimized search component. Must demonstrate: proper dependency management, cleanup, useCallback for event handlers, useMemo for filtered results. Skill: React Hooks, Level: beginner->intermediate, Market demand: 100% of target roles",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-24T16:00:21.878Z",
+        "updatedAt": "2026-03-24T16:00:21.878Z"
+      }
     ]
   ],
-  "counter": 71,
-  "updatedAt": "2026-03-23T19:22:26.589Z"
+  "counter": 72,
+  "updatedAt": "2026-03-24T16:00:22.135Z"
 }
