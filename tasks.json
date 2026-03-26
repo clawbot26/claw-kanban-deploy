@@ -881,8 +881,20 @@
         "createdAt": "2026-03-26T16:00:39.108Z",
         "updatedAt": "2026-03-26T16:00:39.108Z"
       }
+    ],
+    [
+      "task-74",
+      {
+        "id": "task-74",
+        "title": "Build: TaskFlow Kanban Dashboard",
+        "description": "Gap-filling project: Next.js 14 + TypeScript + Zustand + React Query + Tailwind CSS + dnd-kit. Features: drag-and-drop kanban, task creation/filtering, dashboard with Recharts, dark mode, responsive. Purpose: Fill missing keywords (state management, React Query, Tailwind) for job market. Timeline: 1-2 weeks.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-26T17:00:38.353Z",
+        "updatedAt": "2026-03-26T17:00:38.353Z"
+      }
     ]
   ],
-  "counter": 74,
-  "updatedAt": "2026-03-26T16:00:39.243Z"
+  "counter": 75,
+  "updatedAt": "2026-03-26T17:00:38.441Z"
 }
