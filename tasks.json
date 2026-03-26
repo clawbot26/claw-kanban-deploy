@@ -869,8 +869,20 @@
         "createdAt": "2026-03-25T16:00:28.193Z",
         "updatedAt": "2026-03-25T16:00:28.193Z"
       }
+    ],
+    [
+      "task-73",
+      {
+        "id": "task-73",
+        "title": "Practice: Searchable User List with Debounce",
+        "description": "Build React component fetching users from API with debounced search, memoized filtering, and React.memo optimization. Focus: useDebounce hook, useMemo, useCallback, preventing unnecessary re-renders. Skill: React, Level: beginner, Market demand: 95%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-26T16:00:39.108Z",
+        "updatedAt": "2026-03-26T16:00:39.108Z"
+      }
     ]
   ],
-  "counter": 73,
-  "updatedAt": "2026-03-25T16:00:28.313Z"
+  "counter": 74,
+  "updatedAt": "2026-03-26T16:00:39.243Z"
 }
