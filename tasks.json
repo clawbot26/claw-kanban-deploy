@@ -893,8 +893,20 @@
         "createdAt": "2026-03-26T17:00:38.353Z",
         "updatedAt": "2026-03-26T17:00:38.353Z"
       }
+    ],
+    [
+      "task-75",
+      {
+        "id": "task-75",
+        "title": "Practice: Build useDebounce hook with proper cleanup",
+        "description": "Implement a production-ready useDebounce hook that delays value updates. Must handle: cleanup on unmount, delay changes, immediate first call option. Test with search input. Skill: React Hooks, Level: beginner, Market demand: 100% of todays top job leads",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-27T16:00:16.846Z",
+        "updatedAt": "2026-03-27T16:00:16.846Z"
+      }
     ]
   ],
-  "counter": 75,
-  "updatedAt": "2026-03-26T17:00:38.441Z"
+  "counter": 76,
+  "updatedAt": "2026-03-27T16:00:16.967Z"
 }
