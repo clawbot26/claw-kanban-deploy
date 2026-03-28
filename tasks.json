@@ -905,8 +905,20 @@
         "createdAt": "2026-03-27T16:00:16.846Z",
         "updatedAt": "2026-03-27T16:00:16.846Z"
       }
+    ],
+    [
+      "task-76",
+      {
+        "id": "task-76",
+        "title": "Practice: Build useFetch Custom Hook",
+        "description": "Build a production-ready useFetch hook with loading states, error handling, and retry capability. Includes dependency array practice and race condition prevention. Skill: React Hooks, Level: beginner → intermediate, Market demand: 100% of job listings",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-28T16:00:18.430Z",
+        "updatedAt": "2026-03-28T16:00:18.430Z"
+      }
     ]
   ],
-  "counter": 76,
-  "updatedAt": "2026-03-27T16:00:16.967Z"
+  "counter": 77,
+  "updatedAt": "2026-03-28T16:00:18.507Z"
 }
