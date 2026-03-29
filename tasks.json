@@ -917,8 +917,20 @@
         "createdAt": "2026-03-28T16:00:18.430Z",
         "updatedAt": "2026-03-28T16:00:18.430Z"
       }
+    ],
+    [
+      "task-77",
+      {
+        "id": "task-77",
+        "title": "X workflow validation",
+        "description": "Fixed X workflow: repaired JSON syntax error in x-pending-posts.json (missing comma), created validate-workflow-files.js to prevent data corruption from cascading, integrated validation into daily-bootstrap.sh",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-29T05:00:53.292Z",
+        "updatedAt": "2026-03-29T05:00:53.292Z"
+      }
     ]
   ],
-  "counter": 77,
-  "updatedAt": "2026-03-28T16:00:18.507Z"
+  "counter": 78,
+  "updatedAt": "2026-03-29T05:00:53.386Z"
 }
