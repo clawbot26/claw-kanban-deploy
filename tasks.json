@@ -965,8 +965,21 @@
         "createdAt": "2026-03-30T05:01:46.025Z",
         "updatedAt": "2026-03-30T05:01:46.025Z"
       }
+    ],
+    [
+      "task-81",
+      {
+        "id": "task-81",
+        "title": "Briefing: No Swimming Project Ideas",
+        "description": "Hard constraint: NEVER suggest swimming-related projects in daily brief. Swimming news OK. Last reminded: 2026-02-26.",
+        "status": "backlog",
+        "priority": "urgent",
+        "assignee": "clawai",
+        "createdAt": "2026-03-30T16:00:40.859Z",
+        "updatedAt": "2026-03-30T16:00:40.859Z"
+      }
     ]
   ],
-  "counter": 81,
-  "updatedAt": "2026-03-30T05:01:46.116Z"
+  "counter": 82,
+  "updatedAt": "2026-03-30T16:00:40.958Z"
 }
