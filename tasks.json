@@ -1003,8 +1003,20 @@
         "createdAt": "2026-03-30T16:01:12.522Z",
         "updatedAt": "2026-03-30T16:01:12.522Z"
       }
+    ],
+    [
+      "task-84",
+      {
+        "id": "task-84",
+        "title": "Build: Real-Time Collaborative Task Board Portfolio Project",
+        "description": "Purpose: Fill skill gaps identified in resume analysis (state management, Tailwind, WebSockets, accessibility).\n\nTech Stack: Next.js 15 (App Router), TypeScript, Tailwind CSS, Zustand (state management), Socket.io or PartyKit (real-time), Prisma + PostgreSQL, deployed on Vercel.\n\nFeatures: Drag-and-drop task board (react-beautiful-dnd or dnd-kit), real-time collaboration (multiple users see updates), role-based permissions, optimistic UI updates, keyboard navigation/ARIA labels for accessibility, Core Web Vitals optimization (LCP < 2.5s).\n\nWhy: Demonstrates state management (fills resume gap), shows modern Tailwind proficiency (market demand), real-time features differentiate from standard CRUD apps, accessibility knowledge stands out.\n\nTimeline: 1-2 weeks, portfolio-ready demo with live URL.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-30T17:00:30.266Z",
+        "updatedAt": "2026-03-30T17:00:30.266Z"
+      }
     ]
   ],
-  "counter": 84,
-  "updatedAt": "2026-03-30T16:01:12.626Z"
+  "counter": 85,
+  "updatedAt": "2026-03-30T17:00:30.387Z"
 }
