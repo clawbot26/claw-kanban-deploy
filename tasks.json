@@ -991,8 +991,20 @@
         "createdAt": "2026-03-30T16:00:41.984Z",
         "updatedAt": "2026-03-30T16:00:41.984Z"
       }
+    ],
+    [
+      "task-83",
+      {
+        "id": "task-83",
+        "title": "Practice: Performance-Optimized Data Table",
+        "description": "Build a data table with 1000+ rows using React.memo, useMemo, useCallback, and react-window virtualization. Include TypeScript interfaces and React DevTools Profiler analysis. Skill: React Performance, Level: beginner→intermediate, Market demand: 100%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-30T16:01:12.522Z",
+        "updatedAt": "2026-03-30T16:01:12.522Z"
+      }
     ]
   ],
-  "counter": 83,
-  "updatedAt": "2026-03-30T16:00:42.116Z"
+  "counter": 84,
+  "updatedAt": "2026-03-30T16:01:12.626Z"
 }
