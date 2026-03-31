@@ -1051,8 +1051,20 @@
         "createdAt": "2026-03-31T14:03:56.703Z",
         "updatedAt": "2026-03-31T14:03:56.703Z"
       }
+    ],
+    [
+      "task-88",
+      {
+        "id": "task-88",
+        "title": "Practice: Type-Safe User Dashboard with React Hooks",
+        "description": "Build a dashboard with useState TS generics, useEffect proper deps, useMemo, and custom useApi hook. Skill: React + TypeScript integration, Level: beginner to intermediate, Market demand: 100% of todays listings",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-03-31T16:00:47.483Z",
+        "updatedAt": "2026-03-31T16:00:47.483Z"
+      }
     ]
   ],
-  "counter": 88,
-  "updatedAt": "2026-03-31T14:03:56.861Z"
+  "counter": 89,
+  "updatedAt": "2026-03-31T16:00:47.589Z"
 }
