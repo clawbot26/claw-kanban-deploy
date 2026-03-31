@@ -1063,8 +1063,20 @@
         "createdAt": "2026-03-31T16:00:47.483Z",
         "updatedAt": "2026-03-31T16:00:47.483Z"
       }
+    ],
+    [
+      "task-89",
+      {
+        "id": "task-89",
+        "title": "X API Credits Issue",
+        "description": "X engagement session BLOCKED - API credits depleted. All searches failed. Last successful engagement: 2026-03-26.",
+        "status": "pending-review",
+        "priority": "high",
+        "createdAt": "2026-03-31T17:00:20.469Z",
+        "updatedAt": "2026-03-31T17:00:20.469Z"
+      }
     ]
   ],
-  "counter": 89,
-  "updatedAt": "2026-03-31T16:00:47.589Z"
+  "counter": 90,
+  "updatedAt": "2026-03-31T17:00:20.590Z"
 }
