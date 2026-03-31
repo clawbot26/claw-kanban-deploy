@@ -1027,8 +1027,20 @@
         "createdAt": "2026-03-30T23:00:33.417Z",
         "updatedAt": "2026-03-30T23:00:33.417Z"
       }
+    ],
+    [
+      "task-86",
+      {
+        "id": "task-86",
+        "title": "Cron path resolution fix",
+        "description": "Fixed cron job path resolution: created path normalization script and reference file to prevent ~ tilde expansion failures in isolated cron sessions",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-03-31T05:01:07.237Z",
+        "updatedAt": "2026-03-31T05:01:07.237Z"
+      }
     ]
   ],
-  "counter": 86,
-  "updatedAt": "2026-03-30T23:00:33.501Z"
+  "counter": 87,
+  "updatedAt": "2026-03-31T05:01:07.328Z"
 }
