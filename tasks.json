@@ -1099,8 +1099,20 @@
         "createdAt": "2026-04-01T05:03:51.981Z",
         "updatedAt": "2026-04-01T05:03:51.981Z"
       }
+    ],
+    [
+      "task-92",
+      {
+        "id": "task-92",
+        "title": "Practice: useSearch Custom Hook with AbortController",
+        "description": "Build a production-ready useSearch hook that handles debouncing, request cancellation, and race conditions. Critical for React senior roles at Airbnb, DuckDuckGo, EY. Covers: useEffect deps, cleanup, AbortController, error handling.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-04-01T16:01:59.965Z",
+        "updatedAt": "2026-04-01T16:01:59.965Z"
+      }
     ]
   ],
-  "counter": 92,
-  "updatedAt": "2026-04-01T05:03:52.074Z"
+  "counter": 93,
+  "updatedAt": "2026-04-01T16:02:00.076Z"
 }
