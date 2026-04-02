@@ -1123,8 +1123,20 @@
         "createdAt": "2026-04-01T23:00:53.854Z",
         "updatedAt": "2026-04-01T23:00:53.854Z"
       }
+    ],
+    [
+      "task-94",
+      {
+        "id": "task-94",
+        "title": "Workflow maintenance: X engagement jobs",
+        "description": "Disabled X engage afternoon job (API credits depleted), created delivery health integration docs",
+        "status": "done",
+        "priority": "high",
+        "createdAt": "2026-04-02T05:01:24.598Z",
+        "updatedAt": "2026-04-02T05:01:24.598Z"
+      }
     ]
   ],
-  "counter": 94,
-  "updatedAt": "2026-04-01T23:00:53.942Z"
+  "counter": 95,
+  "updatedAt": "2026-04-02T05:01:24.695Z"
 }
