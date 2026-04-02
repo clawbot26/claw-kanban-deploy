@@ -1147,8 +1147,20 @@
         "createdAt": "2026-04-02T14:02:12.848Z",
         "updatedAt": "2026-04-02T14:02:12.848Z"
       }
+    ],
+    [
+      "task-96",
+      {
+        "id": "task-96",
+        "title": "Practice: Generic Data Table with TypeScript",
+        "description": "Build a fully-typed generic DataTable component with sorting, selection, and type-safe columns. Skill: TypeScript, Level: beginner → intermediate. Market demand: 100% of top leads. Required by: Airbnb, DuckDuckGo, BlueThrone, EY, Machinify.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-04-02T16:02:00.820Z",
+        "updatedAt": "2026-04-02T16:02:00.820Z"
+      }
     ]
   ],
-  "counter": 96,
-  "updatedAt": "2026-04-02T14:02:12.984Z"
+  "counter": 97,
+  "updatedAt": "2026-04-02T16:02:00.932Z"
 }
