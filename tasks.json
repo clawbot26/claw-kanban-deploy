@@ -1159,8 +1159,20 @@
         "createdAt": "2026-04-02T16:02:00.820Z",
         "updatedAt": "2026-04-02T16:02:00.820Z"
       }
+    ],
+    [
+      "task-97",
+      {
+        "id": "task-97",
+        "title": "Build: AI-Powered Content Studio Dashboard",
+        "description": "Gap-filling portfolio project to demonstrate: Tailwind CSS (heavy use), Zustand state management, React Query data fetching, Playwright E2E testing, AI integration via Vercel AI SDK or OpenAI. Features: Notion-style rich text editor (TipTap), AI write/summarize buttons, auto-save with optimistic updates, document list, shareable links, dark mode. Stack: Next.js 14 App Router, TypeScript, Tailwind CSS, Zustand, TanStack Query, OpenAI API, Supabase/Neon PostgreSQL, Playwright. Timeline: 10-14 days. Deploy to Vercel with live demo URL.",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-04-02T17:01:53.837Z",
+        "updatedAt": "2026-04-02T17:01:53.837Z"
+      }
     ]
   ],
-  "counter": 97,
-  "updatedAt": "2026-04-02T16:02:00.932Z"
+  "counter": 98,
+  "updatedAt": "2026-04-02T17:01:53.952Z"
 }
