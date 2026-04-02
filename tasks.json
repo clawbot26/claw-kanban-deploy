@@ -1135,8 +1135,20 @@
         "createdAt": "2026-04-02T05:01:24.598Z",
         "updatedAt": "2026-04-02T05:01:24.598Z"
       }
+    ],
+    [
+      "task-95",
+      {
+        "id": "task-95",
+        "title": "Morning Brief Delivery",
+        "description": "Delivered morning brief: Trump Iran speech, DHS shutdown deal ending, China Taiwan Joint Sword drills, TAIEX at 32,572, Q1 market wrap",
+        "status": "done",
+        "priority": "medium",
+        "createdAt": "2026-04-02T14:02:12.848Z",
+        "updatedAt": "2026-04-02T14:02:12.848Z"
+      }
     ]
   ],
-  "counter": 95,
-  "updatedAt": "2026-04-02T05:01:24.695Z"
+  "counter": 96,
+  "updatedAt": "2026-04-02T14:02:12.984Z"
 }
