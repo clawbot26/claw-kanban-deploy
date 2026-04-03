@@ -1171,8 +1171,20 @@
         "createdAt": "2026-04-02T17:01:53.837Z",
         "updatedAt": "2026-04-02T17:01:53.837Z"
       }
+    ],
+    [
+      "task-98",
+      {
+        "id": "task-98",
+        "title": "Practice: Searchable product list with React",
+        "description": "Build a searchable product list using React hooks (useState, useEffect, filtering). Skill: React, Level: beginner, Market demand: 100%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-04-03T16:04:23.624Z",
+        "updatedAt": "2026-04-03T16:04:23.624Z"
+      }
     ]
   ],
-  "counter": 98,
-  "updatedAt": "2026-04-02T17:01:53.952Z"
+  "counter": 99,
+  "updatedAt": "2026-04-03T16:04:23.724Z"
 }
