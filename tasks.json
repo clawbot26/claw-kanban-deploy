@@ -1183,8 +1183,20 @@
         "createdAt": "2026-04-03T16:04:23.624Z",
         "updatedAt": "2026-04-03T16:04:23.624Z"
       }
+    ],
+    [
+      "task-99",
+      {
+        "id": "task-99",
+        "title": "Practice: Next.js Job‑Board Dashboard",
+        "description": "Build a Next.js 15 App Router app with ISR, dynamic routes, and API routes. Skill: Next.js, Level: beginner, Market demand: 50%",
+        "status": "backlog",
+        "priority": "high",
+        "createdAt": "2026-04-04T16:04:34.698Z",
+        "updatedAt": "2026-04-04T16:04:34.698Z"
+      }
     ]
   ],
-  "counter": 99,
-  "updatedAt": "2026-04-03T16:04:23.724Z"
+  "counter": 100,
+  "updatedAt": "2026-04-04T16:04:34.789Z"
 }
